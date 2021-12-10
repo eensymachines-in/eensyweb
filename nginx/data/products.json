@@ -1,0 +1,202 @@
+{
+    "d": [
+        {
+            "id": "autolumin",
+            "status": "in-market",
+            "title": "Autolumin",
+            "live": true,
+            "short_desc": "cloud connected electrical relays",
+            "desc": "Turn on/off, configure your appliances  from anywhere using handhelds. Schedule your switches to do routines. Live in home that understands you better.",
+            "price": {
+                "base": 33000,
+                "rental": 335,
+                "maint": 500
+            },
+            "features": [
+                {
+                    "title": "Internet connected",
+                    "val": 1
+                },
+                {
+                    "title": "Uses sensors",
+                    "val": 0
+                },
+                {
+                    "title": "Clock driven",
+                    "val": 1
+                },
+                {
+                    "title": "Handheld control",
+                    "val": 1
+                },
+                {
+                    "title": "Modular part replacement",
+                    "val": 1
+                },
+                {
+                    "title": "Transferrable",
+                    "val": 0
+                },
+                {
+                    "title": "Touch screen",
+                    "val": 0
+                }
+            ],
+            "img": "autolumin-iso.jpg",
+            "more_link": "#!/products/autolumin",
+            "about": "Autolumin is a set of cloud connected electrical switches that are also attached to a clock. Setting a schedule for the switches would mean you can forget to turn them ON/OFF manually, and it can continue running perinnially doing whats it supposed till you change the schedule.  Changing the schedule is easy & not limited by distance. All you need is a handheld and internet connection. Device on the ground stays connected to a continual, secure WiFi, receiving commands from the cloud anytime. Base variant allows independent/group control of maximum 4, 10A switches. Accessing the application from the handheld requires NO installation / updates- instead the browser on your smart fone does all the job.",
+            "installation": "We recommend installation be done under supervision of a trained electrician. Or of you happen to have experience with electrical relays. Given terminal end connectors for wires, there are about minimum 4 connections and max of 10 connections that need to be secured. You would need a crimper to do this - here is how: Paired black-red are input lines that run from top INTO the switches. While yellow-black piars (4) are output lines that serve as inputs to the end appliance. Once done you can only then power up the device- 5V adaptor",
+            "ownership": "Eensymachines devices each is owned under a single email ID. Upon purchase we configure the device in a specific way so that it appears to be owned under your email ID. Ownerships are NON-transferrable unless they are returned to Eensymachines who (only) then can change ownerships.",
+            "when_offline": "IoT devices are designed to be online 24x7 365 days a year. Rather, being on the cloud is what makes them so unique. Except when booting, your device can function well, when and if your WiFi is down. We had to safeguard your devices from fraud and malicious use, hence booting procedures are exception in that- they need the device to be strictly online. When the device is powered up, wait for the display to come up. A ticking clock on the right top corner of the display indicates success in booting. If your WiFi goes down after the device has booted up it can still work on the schedules you have set previously, but no part of the schedule can be altered till the WiFi is back up. Your device can be paired to one or more WiFi with distinct priorities.",
+            "restart_reset": "Shutdown the device from the webapplication first, and only then power it down physically. While the device is powered off you can still make changes to the schedules on the cloud via the web application. Your device when powered up again will make an attempt to sync the changes made.",
+            "caution": [
+                "Any or all service or maintenance is to be done by Eensymachines' engineers",
+                "A/C nodes under no circumstances should be loaded for more than 10A",
+                "Its advisable to connect this unit after the MCB box if there is a possible over current scenario",
+                "Keep the unit away from children's reach at all times",
+                "Its dangerous to stick any metallic objects in the wire terminals on the exterior of the box",
+                "Unit employs a cooling fan, that runs when the processor temperature rises. Opening the box when on power can lead to accidents",
+                "Trying to make/change A/C connections when the unit is running is extremely dangerous.",
+                "Rapidly switching the power supply to the unit ON/OFF can damage the processor instantly"
+            ],
+            "repair_maint": "Parts that can readily replaced will be so by Eensymachines. Like everything else, all things have a lifespan. We have designed all products to be durable and reliable. But incase there is a replacement that is required you can write to us ",
+            "specs": [
+                {
+                    "title": "Power supply",
+                    "value": 5,
+                    "unit": "volts[DC]"
+                },
+                {
+                    "title": "Power supply",
+                    "value": 2.1,
+                    "unit": "A"
+                },
+                {
+                    "title": "Box size external",
+                    "value": "5 x 7 x 4",
+                    "unit": "inch"
+                },
+                {
+                    "title": "Cooling Fan-cutoff",
+                    "value": 50,
+                    "unit": "oC"
+                },
+                {
+                    "title": "Relay max current",
+                    "value": 10,
+                    "unit": "A"
+                },
+                {
+                    "title": "Relay max volts",
+                    "value": 220,
+                    "unit": "volts[AC]"
+                },
+                {
+                    "title": "No. of switches",
+                    "value": 4,
+                    "unit": "-"
+                },
+                {
+                    "title": "WiFi field",
+                    "value": 30,
+                    "unit": "feet"
+                },
+                {
+                    "title": "Display diagonal",
+                    "value": 0.96,
+                    "unit": "inch"
+                }
+            ]
+        },
+        {
+            "id": "aquaminder",
+            "status": "in-dev",
+            "title": "Aquaminder",
+            "live": false,
+            "short_desc": "cloud connected aquarium accessories",
+            "desc": "Schedule your aquarium accessories precisely to give your pets that perfect environment. Cloud connected aquariums let you operate from handhelds from anywhere there is an internet connection",
+            "price": {
+                "base": 28000,
+                "rental": 500,
+                "maint": 500
+            },
+            "img": "no-image.jpg",
+            "more_link": "#!/products/aquaminder",
+            "features": [
+                {
+                    "title": "Internet connected",
+                    "val": 1
+                },
+                {
+                    "title": "Uses sensors",
+                    "val": 1
+                },
+                {
+                    "title": "Clock driven",
+                    "val": 1
+                },
+                {
+                    "title": "Handheld control",
+                    "val": 1
+                },
+                {
+                    "title": "Modular part replacement",
+                    "val": 1
+                },
+                {
+                    "title": "Transferrable",
+                    "val": 0
+                },
+                {
+                    "title": "Touch screen",
+                    "val": 0
+                }
+            ]
+        },
+        {
+            "id": "cleverpot",
+            "status": "in-dev",
+            "title": "Clever pot",
+            "live": false,
+            "short_desc": "Self watering gardening pots",
+            "desc": "Control your garden's waterning schedule from your smartfone. Refill water tank once and let IoT do its magic for you.",
+            "price": {
+                "base": 40000,
+                "rental": 500,
+                "maint": 500
+            },
+            "img": "no-image.jpg",
+            "more_link": "#!/products/cleverpot",
+            "features": [
+                {
+                    "title": "Internet connected",
+                    "val": 1
+                },
+                {
+                    "title": "Uses sensors",
+                    "val": 1
+                },
+                {
+                    "title": "Clock driven",
+                    "val": 1
+                },
+                {
+                    "title": "Handheld control",
+                    "val": 1
+                },
+                {
+                    "title": "Modular part replacement",
+                    "val": 1
+                },
+                {
+                    "title": "Transferrable",
+                    "val": 0
+                },
+                {
+                    "title": "Touch screen",
+                    "val": 0
+                }
+            ]
+        }
+    ]
+}

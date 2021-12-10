@@ -1,0 +1,41 @@
+<div class="card my-4">
+    <!-- About company or about employee one card that serves all -->
+    <div class="card-body">
+        <section class="d-none d-md-block">
+            <div class="row">
+                <div class="col-2">
+                    <img class="mx-auto d-block" width="100%" 
+                    style="border-radius: 50%;" 
+                    src="/resources/img/{[about.logo]}" alt="photo-company">
+                </div>
+                <div class="col-10">
+                    <h4 class="card-title">{[about.title]}</h4>
+                    <hr>
+                    <h6 class="card-subtitle mb-2 text-muted">{[about.tag_desc]}</h6>
+                    <div class="text-left my-2 row"><social-strip item="about"></social-strip></div>
+                </div>
+            </div>
+            <hr>
+            <div class="container my-4">
+                <p>{[about.short_desc]}</p>
+                <p ng-repeat="para in about.about">{[para.p]}</p>
+            </div>
+        </section>
+        <section class="d-sm-block d-md-none">
+            <div class="row">
+                <img class="mx-auto d-block" width="50%" style="border-radius: 50%;" src="/resources/img/{[about.logo]}"
+                    alt="photo-company">
+            </div>
+            <div class="row my-4">
+                <h4 class="d-block mx-auto">{[about.title]}</h4>
+            </div>
+            <div class="row text-center my-2">
+                <social-strip item="about"></social-strip>
+            </div>
+            <hr>
+            <div class="container my-4">
+                <p>{[about.short_desc]}</p>
+            </div>
+        </section>
+    </div>
+</div>

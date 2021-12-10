@@ -1,0 +1,24 @@
+{
+    "data": {
+        "title": "Eensymachines",
+        "logo": "eensybright.png",
+        "logo_round": "eensy_crop_round.png",
+        "tag_desc": "Internet of things company",
+        "short_desc": "We are a tech-startup based in Pune, India. We build Internet-Of-Things artefacts that can make your home an interesting place to live at. All the products are cloud-ready and can be controlled from anyplace that has internet.",
+        "desc": [
+            {
+                "p": "Eensymachines was conceptualized in March of 2018 and it took shape 2021 and started its first sale in 2022. Begetter was a home-automation enthusiast who built several gadgets for his own home eventually launched it on the market shelf, after having tested it in the field."
+            },
+            {
+                "p": "Eensymachines focuses on getting IoT to common households, making living a fun experience. For long we have got ourseleves busy with menial jobs that could have been delegated to a swarm of tiny machines (eensy machines) which know our preferences well."
+            },
+            {
+                "p": "Eensymachines assembles hardware, writes/builds its software on the devices and cloud. Optimized accurate code, reliable hardware build are some of the hallmarks of it."
+            }
+        ],
+        "email": "mailto:hello@eensymachines.in",
+        "github": "https://github.com/eensymachines-in",
+        "whatsapp": "https://api.whatsapp.com/send?phone=+918390302622",
+        "facebook": "https://www.facebook.com/eensymachines"
+    }
+}

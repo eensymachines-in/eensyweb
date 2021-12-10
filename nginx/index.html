@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta property="og:image" content="http://web.eensymachines.in/images/blogs/smarthome.jpg" />
+    <meta property="og:url" content="http://web.eensymachines.in/#!/blogs/616c2969fc13ae6680000000" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Cloud connected clock synced switches" />
+    <meta property="og:description" content="How cloud connected switches are set to make your life much easier..." />
+    <meta property="fb:app_id" content="" /> -->
+
+    <title>Nginx test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0/angular.min.js"
+        integrity="sha512-M7xRXhk9w4nRi4DAb7uORHxVdPxDJojQiUVx48fiXXaUS+ceQNLo4/EUoxHHPw7qV3M1Uz/zh9JpgXxzU2v/Kg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0/angular-route.min.js"
+        integrity="sha512-93ytnvh8rdL66mhOsJBjZ5DtBzmdpLOmW63nckRrarG/sBkRHKiBbnOATXqk0JUxgdDqZRwRNwiVOPtG2nA/MA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="src/app.js"></script>
+    <script src="src/directives.js"></script>
+    <script src="src/ctrls.js"></script>
+    <script src="src/services.js"></script>
+
+    <!-- All the styles here .. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css"
+        integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/minty/bootstrap.min.css"
+        integrity="sha512-cJfSWSAaQhijZtTYlN999y0ZPyzstO5T7M9ok7gBi8ad9vu9ibPDBu8gEbu/GLlRR3Tt2RAM2kTxX2H+EMicEA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.6.0/font/bootstrap-icons.min.css"
+        integrity="sha512-7w04XesEFaoeeKX0oxkwayDboZB/+AKNF5IUE50fCUDUywLvDN4gv2513TLQS+RDenAeHEK3O40jZZVrkpnWWw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css"
+        integrity="sha512-BnbUDfEUfV0Slx6TunuB042k9tuKe3xrD6q4mg5Ed72LTgzDIcLPxg6yI2gcMFRyomt+yJJxE+zJwNmxki6/RA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/src/styles/app.css">
+</head>
+
+<body ng-app="eensyweb">
+    <nav class="navbar navbar-dark bg-primary navbar-expand-md">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Eensymachines</a>
+            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#!/">Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#!/blogs">Blogs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#!/products">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#!/about">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container" ng-view></div>
+</body>
+
+</html>
