@@ -14,6 +14,9 @@
         })
         .when("/about", {
             templateUrl:"/views/about.html"
+        }) 
+        .when("/products/:id", {
+            templateUrl:"/views/product-detail.html"
         })
         $provide.provider("emailPattern", function(){
             this.$get = function(){

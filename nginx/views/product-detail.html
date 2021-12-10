@@ -1,0 +1,52 @@
+<div class="row my-4" ng-controller="prodDetailCtrl">
+    <!-- Lets make this view a generic one with product details being populated from products.json
+    A controller here will download the relevant details from the data josn file and then populate here -->
+   
+    <div class="col-12 col-md-10 offset-md-1">
+        <div class="col-md-8 offset-md-2 col-12">
+            <!-- this is to display an image of the producy -->
+            <!-- https://www.webfx.com/blog/web-design/circular-images-css/ -->
+            <!-- how to circular crop rectangular images -->
+            <img style="width:100%; height:auto;" class="img-fluid mx-auto rounded" 
+            src="/resources/img/{[selcProd.img]}" alt="photo-company">
+        </div>
+        <h3 class="text-center text-md-left text-primary">{[selcProd.title]}</h3>
+        <hr>
+        <p class="text-md-left text-center">{[selcProd.about]}</p>
+        <h5 class=" text-center text-md-left text-primary">Technical specification</h5>
+        <table class="table table-hover my-4">
+            <thead>
+                <tr>
+                    <th scope="col">Spec</th>
+                    <th scope="col">Value</th>
+                    <th scope="col">Unit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="spec in selcProd.specs">
+                    <th scope="row">{[spec.title]}</th>
+                    <td>{[spec.value]}</td>
+                    <td>{[spec.unit]}</td>
+                </tr>
+            </tbody>
+        </table>
+        <h5 class=" text-center text-md-left text-primary">Ownership</h5>
+        <p class="text-md-left text-center">{[selcProd.ownership]}</p>
+
+        <h5 class=" text-center text-md-left text-primary">Installation</h5>
+        <p class="text-md-left text-center">{[selcProd.installation]}</p>
+
+        <h5 class=" text-center text-md-left text-primary">Offline? Can it still work?</h5>
+        <p class="text-md-left text-center">{[selcProd.when_offline]}</p>
+
+        <h5 class=" text-center text-md-left text-primary">Restart & reset</h5>
+        <p class="text-md-left text-center">{[selcProd.restart_reset]}</p>
+
+        <h5 class=" text-center text-md-left text-secondary">Caution</h5>
+        <ul>
+            <li ng-repeat="c in selcProd.caution">{[c]}</li>
+        </ul>
+        <h5 class=" text-center text-md-left text-primary">Repair & Maintenance</h5>
+        <p class="text-md-left text-center">{[selcProd.repair_maint]}</p>
+    </div>
+</div>

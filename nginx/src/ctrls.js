@@ -19,5 +19,15 @@
         }, function(e){
 
         });
+    }).controller("prodDetailCtrl", function($scope,srvHttp,$routeParams){
+        srvHttp.download_data("products.json").then(function(data){
+            // Here we need to take details from one single product
+            $scope.products = data;
+            var filtered =$scope.products.filter(x=>x.id==$routeParams.id);
+            console.log(filtered);
+            $scope.selcProd  = filtered[0];
+        }, function(e){
+
+        });
     })
 })()
