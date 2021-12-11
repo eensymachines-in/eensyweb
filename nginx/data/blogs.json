@@ -1,0 +1,81 @@
+{
+    "d": [
+        {
+            "title": "Emerging home automation trends",
+            "sub_title": "Bright future of home automation and what can we expect from years ahead",
+            "purport": "Traditional home systems were specifically designed keeping in mind little or no internet connectivity. Users utmost had automation systems that needed physical input for alteration or commands. Thanks to internet-of-things now we have appliances that talk over the cloud. Users can now have remote handle to their homes, but are we getting on the pedestal too soon ?",
+            "date": "2021-10-16",
+            "author": "hello@eensymachines.in",
+            "author_name": "Eensymachines",
+            "place": "Pune, India",
+            "tags": [
+                "information",
+                "current-trends",
+                "IoT",
+                "users",
+                "general"
+            ],
+            "id": "616a3087fc13ae65470000c8",
+            "comments": true,
+            "cover": "homeautomation.jpg",
+            "references": [
+                {
+                    "r": "https://www.analyticsinsight.net/smart-home-trends-that-will-dominate-2021-and-beyond/#:~:text=Better%20connectivity&text=One%20of%20the%20major%20smart,smart%20home%20market%20in%202021.",
+                    "t": "Analytics Insight"
+                }
+            ],
+            "cover_credit": "https://unsplash.com/photos/ljG19qhTzZQ?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink"
+        },
+        {
+            "title": "Cloud connected clock synced switches",
+            "sub_title": "Smart electrical switches, a prelude to Autolumin",
+            "purport": "Future of electrical switches is exciting! Yes you can control your switches from your smartfones, Set a clock to them. Next time you are on a vacation you need not fuss on how your aquarium will survive! Set once from anywhere and enjoy your time away from home.",
+            "date": "2021-10-17",
+            "author": "hello@eensymachines.in",
+            "author_name": "Eensymachines",
+            "place": "Pune",
+            "tags": [
+                "technical",
+                "devices",
+                "IoT",
+                "users",
+                "new-ideas"
+            ],
+            "id": "616c2969fc13ae6680000000",
+            "comments": true,
+            "cover": "smarthome.jpg",
+            "cover_credit": "https://unsplash.com/photos/IJkSskfEqrM?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink",
+            "references": [
+                {
+                    "r": ""
+                }
+            ]
+        },
+        {
+            "title": "Automated homes, the future",
+            "sub_title": "Future of our homes, Once a dream, IoT home automation is slowly but steadily becoming a part of daily lives around the world.",
+            "purport": "With the advent of cloud, it has opened up myraid possibilities. Internet was thought to be a network for humans but with this, now we can have our things go online. Your coffee machine talks to you refridgerator which in turn can send messages to your microwave. Endless possibilities ?",
+            "date": "2021-10-22",
+            "author": "hello@eensymachines.in",
+            "author_name": "Eensymachines",
+            "place": "Pune",
+            "tags": [
+                "home automation",
+                "devices",
+                "IoT",
+                "users",
+                "new-ideas"
+            ],
+            "id": "6172f67dfc13ae7eb00000d2",
+            "comments": true,
+            "cover": "beautifulhome.jpg",
+            "cover_credit": "https://unsplash.com/photos/dS62MvK4CtM?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink",
+            "references": [
+                {
+                    "r": "https://www.iot-now.com/2020/06/10/98753-iot-home-automation-future-holds/",
+                    "t":"Home automation:iot-now.com "
+                }
+            ]
+        }
+    ]
+}

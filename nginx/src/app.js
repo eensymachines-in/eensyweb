@@ -12,6 +12,12 @@
         .when("/products", {
             templateUrl:"/views/products-list.html"
         })
+        .when("/blogs", {
+            templateUrl:"/views/blogs-list.html"
+        })
+        .when("/blogs/:id", {
+            templateUrl:"/views/blogs-read.html"
+        })
         .when("/about", {
             templateUrl:"/views/about.html"
         }) 

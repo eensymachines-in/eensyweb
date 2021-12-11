@@ -1,0 +1,23 @@
+<div id="blog" ng-controller="blogReadCtrl" class="my-4">
+    <h2 class="text-center text-md-left">{[blog.title]}</h2>
+    <h6 class="text-center text-md-left text-muted">{[blog.sub_title]}</h6>
+
+    <h6 class="text-center text-md-left"><a target="_blank" href="mailto:{[blog.author]}">-author@eensymachines.in</a></h6>
+    <h6 class="text-left text-muted"><span ng-repeat="t in blog.tags" class="ml-1 badge rounded-pill bg-info">{[t]}</span><span class="float-right d-none d-md-inline">{[blog.place]}&nbsp;{[blog.date]}</span></h6>
+
+    <hr>
+
+    <img src="/resources/img/{[blog.cover]}" alt="" width="100%">
+    <div class="container text-right mb-4">
+        <small><a target="_blank" href="{[blog.cover_credit]}">Image credits:</a></small>
+    </div>
+    <!-- blog content is pulled from a html file that you need to write up everytime you have a new blog -->
+    <div ng-bind-html='renderHtml()'></div>
+    <hr>
+    <h6 class="text-center text-md-left">References</h6>
+    <ul>
+        <li ng-repeat="r in blog.references">
+            <a target="_blank" href="{[r.r]}">{[r.t]}</a>
+        </li>
+    </ul>
+</div>
