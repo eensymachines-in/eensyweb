@@ -1,14 +1,19 @@
 version: '3.1'
 
 services:
+    goproxy:
+        build: ./eensywebproxy
+        volumes: 
+            - "./proxy:/usr/src/eensy"
+            - "./nginx/data:/usr/src/eensy/web/data"
+            - "./nginx/pages:/usr/src/eensy/web/pages"
+        entrypoint: ["/usr/bin/eensy/webproxy"]
     nginx:
         build: ./nginx
         ports:
             - 80:80
         volumes:
             - "./nginx:/var/www/eensyweb"
-        depends_on: 
+        links: 
             - "goproxy"
-    goproxy:
-        build: ./proxy
-        volumes: "./proxy:/usr/src/eensywebproxy"
+    

@@ -43,7 +43,7 @@
                 }
             ],
             "img": "autolumin-iso.jpg",
-            "more_link": "#!/products/autolumin",
+            "more_link": "/products/autolumin",
             "about": "Autolumin is a set of cloud connected electrical switches that are also attached to a clock. Setting a schedule for the switches would mean you can forget to turn them ON/OFF manually, and it can continue running perinnially doing whats it supposed till you change the schedule.  Changing the schedule is easy & not limited by distance. All you need is a handheld and internet connection. Device on the ground stays connected to a continual, secure WiFi, receiving commands from the cloud anytime. Base variant allows independent/group control of maximum 4, 10A switches. Accessing the application from the handheld requires NO installation / updates- instead the browser on your smart fone does all the job.",
             "installation": "We recommend installation be done under supervision of a trained electrician. Or of you happen to have experience with electrical relays. Given terminal end connectors for wires, there are about minimum 4 connections and max of 10 connections that need to be secured. You would need a crimper to do this - here is how: Paired black-red are input lines that run from top INTO the switches. While yellow-black piars (4) are output lines that serve as inputs to the end appliance. Once done you can only then power up the device- 5V adaptor",
             "ownership": "Eensymachines devices each is owned under a single email ID. Upon purchase we configure the device in a specific way so that it appears to be owned under your email ID. Ownerships are NON-transferrable unless they are returned to Eensymachines who (only) then can change ownerships.",
@@ -121,7 +121,7 @@
                 "maint": 500
             },
             "img": "no-image.jpg",
-            "more_link": "#!/products/aquaminder",
+            "more_link": "/products/aquaminder",
             "features": [
                 {
                     "title": "Internet connected",
@@ -166,7 +166,7 @@
                 "maint": 500
             },
             "img": "no-image.jpg",
-            "more_link": "#!/products/cleverpot",
+            "more_link": "/products/cleverpot",
             "features": [
                 {
                     "title": "Internet connected",

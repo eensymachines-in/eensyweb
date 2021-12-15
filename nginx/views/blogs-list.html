@@ -1,7 +1,7 @@
 <div class="col-12 col-md-6 offset-md-3 my-5" ng-controller="blogsListCtrl">
     <!-- list of blogs go here and also the pagination -->
     <div class="list-group">
-        <a ng-repeat="b in activePage" href="#!/blogs/{[b.id]}" 
+        <a ng-repeat="b in activePage" href="/blogs/{[b.id]}" 
             class="list-group-item list-group-item-action flex-column align-items-start ">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">{[b.title]}</h5>

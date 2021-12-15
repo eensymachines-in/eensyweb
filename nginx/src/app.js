@@ -1,10 +1,14 @@
 // this has the definition of the new anfular js app
 (function(){
-    angular.module("eensyweb",["ngRoute"]).config(function($routeProvider,$interpolateProvider,$provide){
+    angular.module("eensyweb",["ngRoute"]).config(function($routeProvider,$interpolateProvider,$provide,$locationProvider ){
         // with GO Lang frameworks this can help to have angular a distinct space 
         $interpolateProvider.startSymbol("{[")
         $interpolateProvider.endSymbol("]}")
-       
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: true
+          });
+          
         $routeProvider
         .when("/", {
             templateUrl:"/views/splash.html"
