@@ -9,7 +9,7 @@ FROM golang:1.15.11-alpine3.13
 # ARG BIN
 # making all the specific directories, refer to the env file which has the values 
 # RUN mkdir -p ${SRC} && mkdir -p ${LOG} && mkdir -p ${RUN} && mkdir -p ${ETC}
-RUN mkdir -p /usr/src/eensy/web /usr/bin/eensy
+RUN mkdir -p /usr/src/eensy/web /usr/bin/eensy /var/log/eensyproxy
 WORKDIR /usr/src/eensy
 COPY go.sum go.mod ./
 RUN go mod download 

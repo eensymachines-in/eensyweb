@@ -3,10 +3,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
 
+	utl "github.com/eensymachines-in/utilities"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 )
@@ -52,6 +54,10 @@ func sendIndexHtml(c *gin.Context) {
 // dispatchError : will send out the error page when called
 // depending on the httpstatus code this picks the correct page and dispatches the error message
 func dispatchError(code int, c *gin.Context, e string) {
+	log.WithFields(log.Fields{
+		"code": code,
+		"err":  e,
+	}).Info("We are now ready to dispatch error")
 	title := "Unknown error"
 	if code == 400 {
 		title = "Bad request"
@@ -67,18 +73,35 @@ func dispatchError(code int, c *gin.Context, e string) {
 		"errMessage": e,
 	})
 }
+func init() {
+	utl.SetUpLog()
+}
 func main() {
+	// Setting up log configuration
+	logFile := os.Getenv("LOGF")
+	closeLogFile := utl.CustomLog(true, true, logFile) // Log direction and the level of logging
+	file, err := os.Open(os.Getenv("LOGF"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	// redirecting gin output to the file
+	gin.DisableConsoleColor()
+	gin.DefaultWriter = io.MultiWriter(file)
+	defer file.Close()
+	defer closeLogFile()
+	// starting gin configuration
 	gin.SetMode(gin.DebugMode)
+
 	r := gin.Default()
 	r.LoadHTMLGlob(fmt.Sprintf("%s/pages/*", statics))
-	// r.LoadHTMLGlob("/usr/src/eensy/web/views/*")
 	r.GET("/", sendIndexHtml)
-
 	r.GET("/blogs/:bid", func(c *gin.Context) {
-		jsonFile, err := os.Open(fmt.Sprintf("%s/data/blogs.json", statics))
 		bid := c.Param("bid")
+		jsonFile, err := os.Open(fmt.Sprintf("%s/data/blogs.json", statics))
 		if err != nil {
-			fmt.Println(err)
+			log.WithFields(log.Fields{
+				"err": err,
+			}).Error("/blogs/:id - Failed to read blogs.json")
 			// failed to open the data file
 			// sending std. index.html without any modification on the meta tags
 			dispatchError(500, c, "We arent able to find the blog information right now. Wait for admin to fix this.")
@@ -87,21 +110,24 @@ func main() {
 		defer jsonFile.Close() // the file is closed on exit
 		byteValue, _ := ioutil.ReadAll(jsonFile)
 		data := blogData{[]blogMeta{}}
-		if json.Unmarshal(byteValue, &data) != nil {
+		if err := json.Unmarshal(byteValue, &data); err != nil {
+			log.WithFields(log.Fields{
+				"err": err,
+			}).Error("/blogs/:id - Failed to unmarshal blogs.json")
 			dispatchError(500, c, "Failed to read blog content. Something on the server side isnt quite right. Wait for admin to fix this")
 			return
 		}
-		fmt.Printf("Data from json file..%v", data)
 		absBaseUrl, err := getBaseUrl(c)
-
 		if err != nil {
 			// this happens when the nginx server url wasnt read back into the proxy
 			// nginx server IP/domain is passed into the proxy as a part of a header
+			log.WithFields(log.Fields{
+				"err": err,
+			}).Error("/blogs/:id - Failed to read absBaseUrl from the request: cannot form the metadata for the page if not this")
 			dispatchError(400, c, "Something not right about the request being sent. Wait for an admin to fix this")
 			return
 		}
 		for _, m := range data.Data {
-			fmt.Println(m.Id)
 			if m.Id == bid {
 				// this is the blog we are looking for
 				c.HTML(http.StatusOK, "index.html", gin.H{
@@ -114,7 +140,7 @@ func main() {
 				return
 			}
 		}
-		fmt.Printf("Blog with the id wasnt found %s\n", bid)
+		log.Errorf("/blogs/:id - Blog with id %s not found", bid)
 		dispatchError(404, c, "Blog content was moved from here, perhaps retired. Cannot say when shall it be back.")
 
 	})
