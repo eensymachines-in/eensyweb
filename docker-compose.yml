@@ -7,6 +7,9 @@ services:
             - "./proxy:/usr/src/eensy"
             - "./nginx/data:/usr/src/eensy/web/data"
             - "./nginx/pages:/usr/src/eensy/web/pages"
+            - "/var/log/eensyproxy:/var/log/eensyproxy"
+        environment: 
+            - LOGF=/var/log/eensyproxy/proxy.log
         entrypoint: ["/usr/bin/eensy/webproxy"]
     nginx:
         build: ./nginx
@@ -14,6 +17,7 @@ services:
             - 80:80
         volumes:
             - "./nginx:/var/www/eensyweb"
+            - "/var/log/nginx:/var/log/nginx"
         links: 
             - "goproxy"
     
