@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.pageTitle}}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css"
+        integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/minty/bootstrap.min.css"
+        integrity="sha512-cJfSWSAaQhijZtTYlN999y0ZPyzstO5T7M9ok7gBi8ad9vu9ibPDBu8gEbu/GLlRR3Tt2RAM2kTxX2H+EMicEA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css"
+        integrity="sha512-BnbUDfEUfV0Slx6TunuB042k9tuKe3xrD6q4mg5Ed72LTgzDIcLPxg6yI2gcMFRyomt+yJJxE+zJwNmxki6/RA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <!-- All views smaller than desktop -->
+    <div class="container d-block d-md-none my-5">
+        <div class="row">
+            <div class="col-12">
+                <img src="{{.imagePath}}" class="img-fluid my-4 rounded" alt="Responsive image">
+                <h4 class="text-center">{{.errTitle}}</h4>
+                <hr>
+                <p>{{.errMessage}}</p>
+            </div>
+        </div>
+    </div>
+    <!-- Desktop view  -->
+    <div class="container d-none d-md-block  my-5">
+        <div class="row">
+            <div class="col-md-6" style="">
+                <img src="{{.imagePath}}" alt="Responsive image" class="img-fluid rounded">
+            </div>
+            <div class="col-md-6">
+                <h4>{{.errTitle}}</h4>
+                <hr>
+                <p>{{.errMessage}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a href="/" type="button" class="btn btn-outline-info btn-block">Go back home</a>
+    </div>
+</body>
+
+</html>
