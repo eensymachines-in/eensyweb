@@ -76,6 +76,36 @@
                     "t":"Home automation:iot-now.com "
                 }
             ]
+        },
+        {
+            "title": "Autolumin: Electrical switches of the future",
+            "sub_title": "Cloud connected electrical switches are set to bring exciting opportunities to the table. Are you ready?",
+            "purport": "Manual switches are reactive and painfully obsolete. Autolumin is exactly what you were looking for. Cloud connected relays can relive you of trivial domestic duties of having to remember and turn switches.",
+            "date": "2021-12-17",
+            "author": "hello@eensymachines.in",
+            "author_name": "Eensymachines",
+            "place": "Pune",
+            "tags": [
+                "home automation",
+                "devices",
+                "IoT",
+                "users",
+                "autolumin"
+            ],
+            "id": "61bc4413fc13ae61fd000004",
+            "comments": true,
+            "cover": "relay.jpg",
+            "cover_credit": "https://unsplash.com/photos/qDSu_KbX3us?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink",
+            "references": [
+                {
+                    "r":"https://pethelpful.com/fish-aquariums/How-to-Care-for-a-Fish-Tank-Aquarium-Maintenance-Tips",
+                    "t": "Tips for maintaining your aquarium"
+                },
+                {
+                    "r":"https://www.bobvila.com/articles/watering-plants/",
+                    "t":"Tips for watering your garden"
+                }
+            ]
         }
     ]
 }
