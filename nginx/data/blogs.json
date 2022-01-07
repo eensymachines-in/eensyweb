@@ -73,7 +73,7 @@
             "references": [
                 {
                     "r": "https://www.iot-now.com/2020/06/10/98753-iot-home-automation-future-holds/",
-                    "t":"Home automation:iot-now.com "
+                    "t": "Home automation:iot-now.com "
                 }
             ]
         },
@@ -98,12 +98,62 @@
             "cover_credit": "https://unsplash.com/photos/qDSu_KbX3us?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink",
             "references": [
                 {
-                    "r":"https://pethelpful.com/fish-aquariums/How-to-Care-for-a-Fish-Tank-Aquarium-Maintenance-Tips",
+                    "r": "https://pethelpful.com/fish-aquariums/How-to-Care-for-a-Fish-Tank-Aquarium-Maintenance-Tips",
                     "t": "Tips for maintaining your aquarium"
                 },
                 {
-                    "r":"https://www.bobvila.com/articles/watering-plants/",
-                    "t":"Tips for watering your garden"
+                    "r": "https://www.bobvila.com/articles/watering-plants/",
+                    "t": "Tips for watering your garden"
+                }
+            ]
+        },
+        {
+            "title": "Autolumin for aquarium control",
+            "sub_title": "Autolumin is generic switch control using cloud, When applied on aquariums it can do wonders",
+            "purport": "Your aquarium needs punctual care and precise control of working times of the accessories. Autolumin is just the solution you need for the problem",
+            "date": "2022-01-06",
+            "author": "hello@eensymachines.in",
+            "author_name": "Eensymachines",
+            "place": "Pune",
+            "tags": [
+                "home automation",
+                "hobby",
+                "IoT",
+                "aquarium"
+            ],
+            "id": "61d6ef79fc13ae6119000000",
+            "comments": true,
+            "cover": "aquarium2.jpg",
+            "cover_credit": "https://unsplash.com/photos/_LWxQJFgpyo?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink",
+            "references": [
+                {
+                    "r":"https://www.thesprucepets.com/nitrogen-cycle-understanding-1380724",
+                    "t":"1-Nitrogen cycle basics"
+                },
+                {
+                    "r":"https://en.wikipedia.org/wiki/Aquascaping",
+                    "t":"2-Whats aquascaping?"
+                },
+                {
+                    "r":"https://www.thesprucepets.com/kissing-gourami-1378313",
+                    "t":"3-Kissing Gourami fish characters"
+                },
+                {
+                    "r":"https://en.wikipedia.org/wiki/Kissing_gourami",
+                    "t":"4-Gourami fish Wiki"
+                },
+                {
+                    "r":"https://www.thesprucepets.com/swim-bladder-disorder-in-aquarium-fish-1381230",
+                    "t":"5-Whats a swim-bladder disease?"
+                },
+                {
+                    "r":"https://youtu.be/rc_Ag3lHdB0",
+                    "t":"6-YouTube: how to save your fish from swim bladder"
+                },
+                {
+                    "r":"https://www.petmd.com/fish/care/using-good-bacteria-your-aquarium",
+                    "t": "7-Beneficial bacteria in your aquarium"
+
                 }
             ]
         }
