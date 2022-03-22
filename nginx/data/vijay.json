@@ -1,0 +1,16 @@
+{
+    "d": {
+        "title": "Vijay E. Awati",
+        "logo": "awative.jpg",
+        "tag_desc": "Director Eensymachines, Former Head of Dept automotive manufacturing",
+        "email": "mailto:someone@gmail.com",
+        "desc": [{
+                "p": "During his tenure, Vijay was responsible for cost control, process optimization (from design to manufacturing) in vehicular engine and transmission. He has overseen and controlled key performance indicators for over 0.25M vehicles/annum. His expertise in lean manufacturing space optimization and packaging are vital for Eensymachines."
+            },
+            {
+                "p": "As a training officer representing his organization, He has trained students and newbies on subjects like mathematics and engineering drawing."
+            }
+        ],
+        "short_desc": "Vijay is a veteran greenfield project planner who specializes in setting up manufacturing /production units for automotive OEMs. His 3+ decade long experience in TATA motors has given him practical & empirical perspective on optimizing processes and machine layouts. He brings in his rich experience in collaborating with overseas partners."
+    }
+}

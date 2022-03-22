@@ -1,0 +1,21 @@
+{
+    "d": {
+        "title": "Niranjan V. Awati",
+        "logo": "niranjan.jpg",
+        "tag_desc": "IoT junkie, Full stack developer",
+        "email": "mailto:kneerunjun@gmail.com",
+        "github": "https://github.com/kneerunjun",
+        "linkedin": "https://www.linkedin.com/in/niranjan-awati-a2395856/",
+        "youtube": "",
+        "twitter": "https://twitter.com/kneerunjun",
+        "facebook": "https://www.facebook.com/kneerunjun/",
+        "desc": [{
+                "p": "Niranjan has been a passionate programmer with a bent for creating software solutions for everyday problems. Niranjan is adept at using open source technologies on single board computers. In his previous organization on numerous instances he has developed entire solutions on full stack single-handedly."
+            },
+            {
+                "p": "Back in 2017 he made numerous such DIY IoT-builds for his own home, and from it, was conceptualised Eensymachines. His passion for home automation has only grown since then. From automating his own aquarium to developing night-lamps that are cloud connected, Niranjan has done it all."
+            }
+        ],
+        "short_desc": "Niranjan is an IoT junkie, full stack programmer for more than over a decade now. He takes pride in programming single board computers in home automation gadgets. Niranjan believes Eensymachines was built to provide reliable, robust devices for common households aimed at making living a delightful experience relieving the inmates of having to do routine menial tasks."
+    }
+}
