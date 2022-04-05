@@ -1,12 +1,11 @@
 {
-    "d": [
-        {
+    "d": [{
             "title": "Emerging home automation trends",
             "sub_title": "Bright future of home automation and what can we expect from years ahead",
             "purport": "Traditional home systems were specifically designed keeping in mind little or no internet connectivity. Users utmost had automation systems that needed physical input for alteration or commands. Thanks to internet-of-things now we have appliances that talk over the cloud. Users can now have remote handle to their homes, but are we getting on the pedestal too soon ?",
             "date": "2021-10-16",
-            "author": "hello@eensymachines.in",
-            "author_name": "Eensymachines",
+            "author": "kneerunjun@gmail.com",
+            "author_name": "Niranjan",
             "place": "Pune, India",
             "tags": [
                 "information",
@@ -18,12 +17,10 @@
             "id": "616a3087fc13ae65470000c8",
             "comments": true,
             "cover": "homeautomation.jpg",
-            "references": [
-                {
-                    "r": "https://www.analyticsinsight.net/smart-home-trends-that-will-dominate-2021-and-beyond/#:~:text=Better%20connectivity&text=One%20of%20the%20major%20smart,smart%20home%20market%20in%202021.",
-                    "t": "Analytics Insight"
-                }
-            ],
+            "references": [{
+                "r": "https://www.analyticsinsight.net/smart-home-trends-that-will-dominate-2021-and-beyond/#:~:text=Better%20connectivity&text=One%20of%20the%20major%20smart,smart%20home%20market%20in%202021.",
+                "t": "Analytics Insight"
+            }],
             "cover_credit": "https://unsplash.com/photos/ljG19qhTzZQ?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink"
         },
         {
@@ -31,8 +28,8 @@
             "sub_title": "Smart electrical switches, a prelude to Autolumin",
             "purport": "Future of electrical switches is exciting! Yes you can control your switches from your smartfones, Set a clock to them. Next time you are on a vacation you need not fuss on how your aquarium will survive! Set once from anywhere and enjoy your time away from home.",
             "date": "2021-10-17",
-            "author": "hello@eensymachines.in",
-            "author_name": "Eensymachines",
+            "author": "kneerunjun@gmail.com",
+            "author_name": "Niranjan",
             "place": "Pune",
             "tags": [
                 "technical",
@@ -45,19 +42,17 @@
             "comments": true,
             "cover": "smarthome.jpg",
             "cover_credit": "https://unsplash.com/photos/IJkSskfEqrM?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink",
-            "references": [
-                {
-                    "r": ""
-                }
-            ]
+            "references": [{
+                "r": ""
+            }]
         },
         {
             "title": "Automated homes, the future",
             "sub_title": "Future of our homes, Once a dream, IoT home automation is slowly but steadily becoming a part of daily lives around the world.",
             "purport": "With the advent of cloud, it has opened up myraid possibilities. Internet was thought to be a network for humans but with this, now we can have our things go online. Your coffee machine talks to you refridgerator which in turn can send messages to your microwave. Endless possibilities ?",
             "date": "2021-10-22",
-            "author": "hello@eensymachines.in",
-            "author_name": "Eensymachines",
+            "author": "kneerunjun@gmail.com",
+            "author_name": "Niranjan",
             "place": "Pune",
             "tags": [
                 "home automation",
@@ -70,20 +65,18 @@
             "comments": true,
             "cover": "beautifulhome.jpg",
             "cover_credit": "https://unsplash.com/photos/dS62MvK4CtM?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink",
-            "references": [
-                {
-                    "r": "https://www.iot-now.com/2020/06/10/98753-iot-home-automation-future-holds/",
-                    "t": "Home automation:iot-now.com "
-                }
-            ]
+            "references": [{
+                "r": "https://www.iot-now.com/2020/06/10/98753-iot-home-automation-future-holds/",
+                "t": "Home automation:iot-now.com "
+            }]
         },
         {
             "title": "Autolumin: Electrical switches of the future",
             "sub_title": "Cloud connected electrical switches are set to bring exciting opportunities to the table. Are you ready?",
             "purport": "Manual switches are reactive and painfully obsolete. Autolumin is exactly what you were looking for. Cloud connected relays can relive you of trivial domestic duties of having to remember and turn switches.",
             "date": "2021-12-17",
-            "author": "hello@eensymachines.in",
-            "author_name": "Eensymachines",
+            "author": "kneerunjun@gmail.com",
+            "author_name": "Niranjan",
             "place": "Pune",
             "tags": [
                 "home automation",
@@ -96,8 +89,7 @@
             "comments": true,
             "cover": "relay.jpg",
             "cover_credit": "https://unsplash.com/photos/qDSu_KbX3us?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink",
-            "references": [
-                {
+            "references": [{
                     "r": "https://pethelpful.com/fish-aquariums/How-to-Care-for-a-Fish-Tank-Aquarium-Maintenance-Tips",
                     "t": "Tips for maintaining your aquarium"
                 },
@@ -112,8 +104,8 @@
             "sub_title": "Autolumin is generic switch control using cloud, When applied on aquariums it can do wonders",
             "purport": "Your aquarium needs punctual care and precise control of working times of the accessories. Autolumin is just the solution you need for the problem",
             "date": "2022-01-06",
-            "author": "hello@eensymachines.in",
-            "author_name": "Eensymachines",
+            "author": "kneerunjun@gmail.com",
+            "author_name": "Niranjan",
             "place": "Pune",
             "tags": [
                 "home automation",
@@ -125,37 +117,58 @@
             "comments": true,
             "cover": "aquarium2.jpg",
             "cover_credit": "https://unsplash.com/photos/_LWxQJFgpyo?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink",
-            "references": [
-                {
-                    "r":"https://www.thesprucepets.com/nitrogen-cycle-understanding-1380724",
-                    "t":"1-Nitrogen cycle basics"
+            "references": [{
+                    "r": "https://www.thesprucepets.com/nitrogen-cycle-understanding-1380724",
+                    "t": "1-Nitrogen cycle basics"
                 },
                 {
-                    "r":"https://en.wikipedia.org/wiki/Aquascaping",
-                    "t":"2-Whats aquascaping?"
+                    "r": "https://en.wikipedia.org/wiki/Aquascaping",
+                    "t": "2-Whats aquascaping?"
                 },
                 {
-                    "r":"https://www.thesprucepets.com/kissing-gourami-1378313",
-                    "t":"3-Kissing Gourami fish characters"
+                    "r": "https://www.thesprucepets.com/kissing-gourami-1378313",
+                    "t": "3-Kissing Gourami fish characters"
                 },
                 {
-                    "r":"https://en.wikipedia.org/wiki/Kissing_gourami",
-                    "t":"4-Gourami fish Wiki"
+                    "r": "https://en.wikipedia.org/wiki/Kissing_gourami",
+                    "t": "4-Gourami fish Wiki"
                 },
                 {
-                    "r":"https://www.thesprucepets.com/swim-bladder-disorder-in-aquarium-fish-1381230",
-                    "t":"5-Whats a swim-bladder disease?"
+                    "r": "https://www.thesprucepets.com/swim-bladder-disorder-in-aquarium-fish-1381230",
+                    "t": "5-Whats a swim-bladder disease?"
                 },
                 {
-                    "r":"https://youtu.be/rc_Ag3lHdB0",
-                    "t":"6-YouTube: how to save your fish from swim bladder"
+                    "r": "https://youtu.be/rc_Ag3lHdB0",
+                    "t": "6-YouTube: how to save your fish from swim bladder"
                 },
                 {
-                    "r":"https://www.petmd.com/fish/care/using-good-bacteria-your-aquarium",
+                    "r": "https://www.petmd.com/fish/care/using-good-bacteria-your-aquarium",
                     "t": "7-Beneficial bacteria in your aquarium"
-
                 }
             ]
+        },
+        {
+            "title": "Air conditioning for true thermal comfort",
+            "sub_title": "IoT based airconditioner for true thermal comfort and energy efficiency.",
+            "purport": "You have been using the A/C all wrong. If thermal comfort is what you seek, then you would be surprised to know its based on external relative humidity that you come indoors from",
+            "date": "2022-03-24",
+            "author": "kneerunjun@gmail.com",
+            "author_name": "Niranjan",
+            "place": "Pune",
+            "tags": [
+                "home automation",
+                "air-conditioning",
+                "IoT",
+                "thermal comfort"
+            ],
+            "id": "623b1bbcfc13ae338b000066",
+            "comments": true,
+            "cover": "aircon.jpg",
+            "cover_credit": "https://unsplash.com/photos/bpq1X06_yHQ?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink",
+            "references": [{
+                "r": "https://ieeexplore.ieee.org/document/8825079",
+                "t": "White paper on IoT and Airconditioning"
+            }]
         }
     ]
 }

@@ -2,7 +2,7 @@
     <h2 class="text-center text-md-left">{[blog.title]}</h2>
     <h6 class="text-center text-md-left text-muted">{[blog.sub_title]}</h6>
 
-    <h6 class="text-center text-md-left"><a target="_blank" href="mailto:{[blog.author]}">-author@eensymachines.in</a></h6>
+    <h6 class="text-center text-md-left"><a target="_blank" href="mailto:{[blog.author]}">-{[blog.author_name]}</a></h6>
     <h6 class="text-left text-muted"><span ng-repeat="t in blog.tags" class="ml-1 badge rounded-pill bg-info">{[t]}</span><span class="float-right d-none d-md-inline">{[blog.place]}&nbsp;{[blog.date]}</span></h6>
 
     <hr>

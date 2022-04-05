@@ -1,0 +1,61 @@
+<div class="container">
+    <h4 class="text-secondary text-center text-md-left">Have you been using your A/C wrong?</h4>
+    <hr>
+    <p class="text-justified text-md-left">Thermal comfort plays a major role in occupant satisfaction and hence the productivity in workspaces. For the tropical regions, air conditioner is the most popular appliance used. Contarary to common belief we may not know how to use this appliance
+        correctly atleast from the standpoint of achieving true ambient comfort. <span class="text-info">Setting the A/C
+            to a maximum throughput (lowest temp and max fan speed) can be detrimental to the occupant's health apart
+            from the excessive energy consumption.</span> Instead an IoT system that works on a proven mathematical model to achieve <strong class="text-info">thermal comfort</strong> taking into consideration external conditions can be more effective.
+        Combined with the sensor data Predicted Mean Vote (PMV) can optimize the energy consumption and arrive at a <strong class="text-info">truly
+            comfortable ambience</strong></p>
+    <h4 class="text-secondary text-center text-md-left">Research in recent years</h4>
+    <hr>
+    <p class="text-justified text-md-left">The issue of environmental change has led to many researchers to put more diligent efforts in the field of thermal comfort. In general, thermal comfort and evaluation of the indoor environmental quality is depending on human physiological and psychological
+        responses to the surrounding environment integrated with behavioural factors that interact with space. A specific issue has risen which is on how to provide a comfortable environment inside an office throughout the working time. However, obtaining
+        an optimal office temperature that the worker feel comfortable with is challenging because it deals with an integration of the complex thermodynamic of the human body and a nonlinear mapping between personal preferences and the environmental variables
+        <sup>[1]</sup>
+    </p>
+    <div class="text-center">
+        <!-- https://getbootstrap.com/docs/4.0/content/images/ -->
+        <img class="d-none d-md-inline" src="/images/iot_ac_scope.png" alt="" width="50%" class="img-fluid" style="max-width: 100%; height: auto;">
+        <img class="d-inline d-md-none" src="/images/iot_ac_scope.png" alt="" width="100%" class="img-fluid" style="max-width: 100%; height: auto;">
+    </div>
+    <p class="text-justified text-md-left mt-3">World Bank indicates by 2030, 85% of the populace would be in developing nations spending 80-85% of their times in enclosed spaces like office buildings. Optimizing A/C energy consumption becomes all the more relevant and vital.</p>
+    <p class="text-justified text-md-left">Figure above summarizes the overall scope of this discussion. This study concentrates on tropical <strong>region where it faces high relative humidity, high air temperature and low air
+            speed.</strong> It focuses on small sized room in which the occupancy is doing sedentary work. We are assuming that A/C is the most common tool used to feel comfortable in these regions and hence would remain central to our discussions. The
+        A/C here (controlled by the PMV algorithm) with IoT alongside will guarentee a suitable thermal comfort for the occupants
+    </p>
+    <h4 class="text-secondary text-center text-md-left">PMV model</h4>
+    <hr>
+    <p class="text-justified text-md-left">The word thermal comfort is utilized to imply data about the thermal condition of human with the indoor environment. The concept of thermal comfort consists of three main disciplines such as physiology, psychology and behavioural factors. Creating
+        a healthy and satisfying condition for the people is the main objective of thermal comfort. As a whole, indoor thermal comfort researches can be classified into two approaches: <strong>adaptive and steady-state
+            model.</strong> These two approaches have different ideology about the way individuals react to their surroundings
+    </p>
+    <p class="text-justified text-md-left">The adaptive approach identifies humans as the active recipient which can react with a response to maintain their thermal comfort whenever any environment changes occurred that can cause discomfort to them.Adaptive approach is based on the studies
+        of naturally ventilated building.</p>
+    <p class="text-justified text-md-left"> While the steady state approach is founded by P.O Fanger in 1970s could be used for indoor environment with AC system. This approach mainly depends on heat balanced model of the human body. <strong class="text-info">Predicting a mean thermal sensation of the occupancy at indoor environment is the main target of the Fanger’s model.</strong>
+    </p>
+    <p class="text-justified text-md-left">P.O Fanger developed the <strong>Predicted Mean Vote (PMV)</strong> by integrating equations of heat balance and experimental studies about human skin temperature and used it to determine the thermal comfort. PMV and Predicted Percentage of Dissatisfied
+        (PPD) are typical indicators that use to express the thermal sensation of the people. There are six factors that affect thermal comfort at indoor environment, four of them are environmental-based such as air <strong>velocity, relative humidity, mean radiant
+            temperature and air temperature</strong></p>
+    <p>PMV deals with a scale from -3 (cool) to +3 (hot),It helps the users in characterizing their comfortability towards their surrounding environment. Instead of letting the user decide on the temp to be set and fan speed choice, we here are asking the
+        user to describe the sensation that they want to feel. 75% of the people are feel satisfied with a range between PMV = -1 and PMV = +1. While the level of people’s satisfaction increased to 90% with PMV range between PMV = -0.5 and PMV = + 0.5.
+        An additional PPD index which indicates the relationship of PMV with the percentage of the people who may not satisfy with the characterized scale has also been developed.However, since PPD index is usually being used to measure dissatisfaction
+        of comfortability in a bigger audience, this PDD index is not usable here as the enhanced PMV-based model is designed exclusively for small indoor environment which occupied one or two people. </p>
+
+    <div class="text-center">
+        <img class="d-none d-md-inline" src="/images/pmvblock.png" alt="" width="50%" class="img-fluid" style="max-width: 100%; height: auto;">
+        <img class="d-inline d-md-none" src="/images/pmvblock.png" alt="" width="100%" class="img-fluid" style="max-width: 100%; height: auto;">
+    </div>
+    <h4 class="text-secondary text-center text-md-left">Deducing the PMV value</h4>
+    <hr>
+    <div class="text-center">
+        <img class="d-none d-md-inline" src="/images/pmvgraph.png" alt="" width="70%" class="img-fluid" style="max-width: 100%; height: auto;">
+        <img class="d-inline d-md-none" src="/images/pmvgraph.png" alt="" width="100%" class="img-fluid" style="max-width: 100%; height: auto;">
+    </div>
+    <p class="text-justified text-md-left">Let's for a moment imagine that we have a sensory system that can gets us the relative humidity around the air conditioner. The RH value in percentage forms the left vertical axis. User input on the PMV value can then help us project orthogonally
+        on the horizontal temperature axis. The resultant temperature is the most economical and thermally comforting. The projection can be then parallely taken on the right vertical to arrive at the ideal fan speed.</p>
+    <h4 class="text-secondary text-center text-md-left">At Eensymachines, we are making ..</h4>
+    <hr>
+    <p class="text-justified text-md-left">We intend to build a prototype of this very soon. Once we are done, your ACs can be a tad bit smarter, healthier, and economical. You could pick your handhelds, set a temperature and seton the A/C as you arrive at your residence. All what you would
+        enter is a sensation - and the A/C would make you feel exactly that.</p>
+</div>
