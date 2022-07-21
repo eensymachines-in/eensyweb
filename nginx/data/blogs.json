@@ -169,6 +169,29 @@
                 "r": "https://ieeexplore.ieee.org/document/8825079",
                 "t": "White paper on IoT and Airconditioning"
             }]
+        },
+        {
+            "title": "Telegram and IoT push notifications",
+            "sub_title": "Using telegram to push IoT notifications. Getting device updates on the move",
+            "purport": "While web apps are handy, getting push notifications from your device on the ground can require you to access one of the  established messaging apps already on your fone.",
+            "date": "2022-07-22",
+            "author": "kneerunjun@gmail.com",
+            "author_name": "Niranjan",
+            "place": "Pune",
+            "tags": [
+                "home automation",
+                "telegram",
+                "IoT",
+                "notifications"
+            ],
+            "id": "62d89df0fc13ae360500044c",
+            "comments": true,
+            "cover": "telegram.jpg",
+            "cover_credit": "https://unsplash.com/photos/u4F54GIZWGI?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink",
+            "references": [{
+                "r": "https://core.telegram.org/bots/api",
+                "t": "Telegram bot API documentation"
+            }]
         }
     ]
 }

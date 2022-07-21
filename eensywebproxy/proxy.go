@@ -158,5 +158,6 @@ func main() {
 			"errMessage": "Failed to get resource at the desired location.",
 		})
 	})
+	r.GET("/testpay", sendIndexHtml)
 	log.Fatal(r.Run(":8080"))
 }
