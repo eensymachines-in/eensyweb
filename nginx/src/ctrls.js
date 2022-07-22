@@ -86,9 +86,48 @@
 
         });
 
-    }).controller("testPayCtrl", function($scope, $element) {
+    }).controller("testPayCtrl", function($scope, $http) {
+        // A sample controller to see if we can trigger an order id creation and hence access API on RZP
+        // for this when running will keep RZP in test mode
+        alert("inside testPayCtrl")
         console.log("inside testPayCtrl")
-        var js = $element.find("script")[0].innerHTML;
-        eval(js);
+        var options = {
+            "key": "rzp_test_Z4AumzgwmBpgQv", // Enter the Key ID generated from the Dashboard
+            "amount": "500", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "Acme Corp",
+            "description": "Test Transaction",
+            "image": "",
+            "order_id": "order_JwJWSlUBtlMzL6", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function(response) {
+                console.log(response.razorpay_payment_id);
+                console.log(response.razorpay_order_id);
+                console.log(response.razorpay_signature)
+            },
+            "prefill": {
+                "name": "Niranjan Awati",
+                "email": "kneerunjun@gmail.com",
+                "contact": "8390302622"
+            },
+            "notes": {
+                "address": "Eensymachines, Pune, 411038"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.on('payment.failed', function(response) {
+            alert(response.error.code);
+            alert(response.error.description);
+            alert(response.error.source);
+            alert(response.error.step);
+            alert(response.error.reason);
+            alert(response.error.metadata.order_id);
+            alert(response.error.metadata.payment_id);
+        });
+        $scope.test_pay = function() {
+            rzp1.open()
+        }
     })
 })()
