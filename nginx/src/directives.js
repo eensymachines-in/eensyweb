@@ -64,6 +64,7 @@
                     var reset = function() {
                         $scope.areaOptions = [];
                         $scope.blockArea = null; // view model for 
+                        $scope.err = null;
                     };
                     reset();
                     // This will verify the pincode with 3rd party and check for delivery suitability
@@ -76,8 +77,8 @@
                                 'Content-Type': "application/json",
                             },
                         }).then(function(response) {
-                            if (response.data[0].PostOffice.length > 0) {
-                                var data = response.data[0];
+                            var data = response.data[0];
+                            if (data.PostOffice != null) {
                                 $scope.state = data.PostOffice[0].State;
                                 data.PostOffice.forEach(function(po) {
                                     // User options for the POs in the zone 
@@ -91,10 +92,21 @@
                                         }
                                     });
                                 });
+                            } else {
+                                // When the pin is not found this api does not emit 404
+                                // instead sends back the error in the same format 
+                                // but with field PostOffice == null 
+                                $scope.err = {
+                                    msg: "failed to get pin code details"
+                                }
                             }
                         }, function(response) {
                             // TODO: handle the error gracefully 
-                            console.error("failed to verify the pin code location for delivery")
+                            console.error("failed to get pin code details ..");
+                            $scope.err = {
+                                msg: "failed to get pin code details"
+                            }
+
                         })
                     }
                     console.log("now inside the pinLocation directive")

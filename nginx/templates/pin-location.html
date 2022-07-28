@@ -1,10 +1,10 @@
 <div class="form-group">
-    <label for="pymntName" class="form-label mt-4 text-info">Pincode</label>
+    <label for="pincode" class="form-label mt-4 text-info">Pincode</label>
     <!-- http://www.postalpincode.in/Api-Details -->
     <section id="pincode">
         <!-- thsi will capture the pin code of the deliverable location -->
         <div class="input-group mb-3">
-            <input ng-model="pin" type="number" class="form-control" placeholder="Delivery pin code" aria-label="deliverypincode" aria-describedby="button-addon2">
+            <input ng-class="{true:'is-invalid'}[err!=null]" ng-model="pin" type="number" class="form-control" placeholder="Delivery pin code" aria-label="deliverypincode" aria-describedby="button-addon2">
             <button ng-click="check_pincode()" class="btn btn-info" type="button" id="button-addon2">Check</button>
         </div>
     </section>
