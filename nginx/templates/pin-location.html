@@ -1,0 +1,26 @@
+<div class="form-group">
+    <label for="pymntName" class="form-label mt-4 text-info">Pincode</label>
+    <!-- http://www.postalpincode.in/Api-Details -->
+    <section id="pincode">
+        <!-- thsi will capture the pin code of the deliverable location -->
+        <div class="input-group mb-3">
+            <input ng-model="pin" type="number" class="form-control" placeholder="Delivery pin code" aria-label="deliverypincode" aria-describedby="button-addon2">
+            <button ng-click="check_pincode()" class="btn btn-info" type="button" id="button-addon2">Check</button>
+        </div>
+    </section>
+    <section ng-show="areaOptions.length>0 && blockArea==null">
+        <!-- this will let the user select the PO -->
+        <ul class="list-group mt-1">
+            <li ng-click="ao.select(ao.title)" ng-repeat="ao in areaOptions" class="list-group-item d-flex justify-content-between align-items-center">
+                {[ao.title]}
+            </li>
+        </ul>
+    </section>
+    <section ng-show="blockArea!=null">
+        <!-- this will capture the address of the location -->
+        <button type="button" class="btn btn-sm btn-outline-info">{[blockArea.title]}</button>
+        <div class="form-group mt-2">
+            <textarea ng-model="addr" class="form-control" id="addressText" rows="6" placeholder="Enter your complete address"></textarea>
+        </div>
+    </section>
+</div>

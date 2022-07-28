@@ -86,48 +86,149 @@
 
         });
 
-    }).controller("testPayCtrl", function($scope, $http) {
-        // A sample controller to see if we can trigger an order id creation and hence access API on RZP
-        // for this when running will keep RZP in test mode
-        alert("inside testPayCtrl")
-        console.log("inside testPayCtrl")
-        var options = {
-            "key": "rzp_test_Z4AumzgwmBpgQv", // Enter the Key ID generated from the Dashboard
-            "amount": "500", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-            "currency": "INR",
-            "name": "Acme Corp",
-            "description": "Test Transaction",
-            "image": "",
-            "order_id": "order_JwJWSlUBtlMzL6", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            "handler": function(response) {
+    }).controller("testPayCtrl", function($scope, $http, rzpKey, srvPurchase) {
+        srvPurchase.set_purchase("autolumin", 29500)
+        $scope.orderFailed = null;
+        $scope.units = 1;
+        $scope.pinCode;
+        $scope.location = {
+            pin: 0,
+            state: "",
+            block: "",
+            // this can let user select the broader area of delivery
+            areasList: {
+                disp: false,
+                options: [],
+                select: "", // the selected area
+            },
+            addressTxtBox: {
+                addr: "",
+                disp: false
+            }
+        };
+
+        // somehow we have to see how we can send in rateOfUnit to this controller from another one
+        // or is it possible to pass from routes?
+        var rateOfUnit = srvPurchase.purchase.rate * 100;
+        console.log("purchase for: " + srvPurchase.purchase.product);
+        console.log("rate of the product :" + rateOfUnit);
+        // create an order by hitting the url on eensy api  .. 
+        // once we have he order we can then send the order id to razorpay for checkout.js
+
+        $scope.invalidity = {
+            email: false,
+            name: false,
+            contact: false,
+            check: function() {
+                // this shall check the validtiy of the payment fields entered by the user
+                this.email = $scope.order.prefill.email == "";
+                this.name = $scope.order.prefill.name == "";
+                this.contact = $scope.order.prefill.contact == "";
+                return this.email || this.name || this.contact;
+            }
+        }
+        $scope.order = {
+            // this has to come a provider
+            key: rzpKey.test,
+            // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            amount: rateOfUnit * $scope.units,
+            currency: "INR",
+            // this is generated first in 
+            order_id: "",
+            name: "Eensymachines",
+            description: "Home automation purchase ",
+            image: "/images/eensybright.png",
+            handler: function(response) {
+                // this is out of angularjs scope 
+                // once we have the confirmation of payment - success/failure we go ahead to post the same to eensy server
+                $scope.$apply(function() {
+                    // for the url to be hit we need service support to form the base url
+                    $http({
+                        method: "POST",
+                        url: "http://localhost/payments",
+                        headers: {
+                            'Content-Type': "application/json",
+                        },
+                        data: JSON.stringify({
+                            "razorpay_payment_id": response.razorpay_payment_id,
+                            "razorpay_order_id": response.razorpay_order_id,
+                            "razorpay_signature": response.razorpay_signature
+                        })
+
+                    }).then(function(response) {
+                        console.log("payment confirmed..")
+                    }, function(data) {
+                        console.log("Payment could be done, not confirmed")
+                    })
+                })
                 console.log(response.razorpay_payment_id);
                 console.log(response.razorpay_order_id);
                 console.log(response.razorpay_signature)
             },
-            "prefill": {
-                "name": "Niranjan Awati",
-                "email": "kneerunjun@gmail.com",
-                "contact": "8390302622"
+            prefill: {
+                // this has to come from a form that user fills out 
+                name: "",
+                email: "",
+                contact: ""
             },
-            "notes": {
-                "address": "Eensymachines, Pune, 411038"
+            notes: {
+                // order shipping address is basically from this
+                address: "",
+                pin: "",
+                state: "",
             },
-            "theme": {
-                "color": "#3399cc"
+            theme: {
+                color: "#3399cc"
             }
         };
-        var rzp1 = new Razorpay(options);
-        rzp1.on('payment.failed', function(response) {
-            alert(response.error.code);
-            alert(response.error.description);
-            alert(response.error.source);
-            alert(response.error.step);
-            alert(response.error.reason);
-            alert(response.error.metadata.order_id);
-            alert(response.error.metadata.payment_id);
-        });
-        $scope.test_pay = function() {
-            rzp1.open()
+        $scope.$watch("units", function(after, before) {
+            $scope.order.amount = after * rateOfUnit;
+        })
+        $scope.init_rzp_pay = function() {
+            // this would create the order first on the server 
+            // order creation lets you have the order id and the amount of payment
+            // then opens the rzp dialog 
+            // completes the payment 
+            // sends the payment confirmation to server again
+            if ($scope.invalidity.check() == true) {
+                console.log("one or more order fields are valid");
+                console.warn("aborting order creation");
+                console.log($scope.invalidity);
+                return;
+            };
+            console.log($scope.order.notes);
+            // $http({
+            //     method: "POST",
+            //     url: "http://localhost/orders",
+            //     headers: {
+            //         'Content-Type': "application/json",
+            //     },
+            //     data: JSON.stringify({
+            //         "amount": $scope.order.amount,
+            //         "partial_payment": false,
+            //         "currency": "INR"
+            //     })
+            // }).then(function(response) {
+            //     console.log("order has been created")
+            //     $scope.order.order_id = response.data.id;
+            //     var rzp1 = new Razorpay($scope.order);
+            //     rzp1.on('payment.failed', function(response) {
+            //         console.log(response.error.code);
+            //         console.log(response.error.description);
+            //         console.log(response.error.source);
+            //         console.log(response.error.step);
+            //         console.log(response.error.reason);
+            //         console.log(response.error.metadata.order_id);
+            //         console.log(response.error.metadata.payment_id);
+            //     });
+            //     rzp1.open();
+            // }, function(data) {
+            //     $scope.orderFailed = {
+            //         title: "Failed",
+            //         msg: data.err
+            //     }
+            // })
+
         }
     })
 })()

@@ -1,3 +1,54 @@
 <div class="row my-3" ng-controller="testPayCtrl">
-    <button type="button" ng-click="test_pay()" class="btn btn-primary">Primary</button>
+    <div class="col-12 col-md-6 offset-md-3">
+        <!-- form captures payee details so that we can create order on eensy server -->
+        <!-- upon successful creation of order on server this initiates the payment dialog -->
+        <form style="border:0.1ex solid #ced4da; border-radius: 0.4rem; padding: 4%;">
+            <fieldset>
+                <legend class="text-info">Order</legend>
+                <small class="text-muted">Before you place the order, we need to get some quick details about you.<br>Such details are for the sole purpose of tracking the order uniquely to you.</small>
+                <hr>
+                <!-- <small class="text-info">Thanks for deciding to purchase from Eensymachines. We need some quick details so as to track orders better. Orders once placed take a week to be dispatched.</small> -->
+                <div class="form-group">
+                    <label for="pymntEmail" class="form-label text-info">Email address</label>
+                    <input type="email" class="form-control" id="pymntEmail" aria-describedby="emailHelp" placeholder="ex: john.smith@gmail.com" ng-model="order.prefill.email" ng-class="{true:'is-invalid'}[invalidity.email==true]">
+                    <small>So that we can send you updates about the change in status</small>
+                </div>
+                <div class="form-group">
+                    <label for="pymntName" class="form-label text-info">Name</label>
+                    <input type="text" class="form-control" id="pymntName" aria-describedby="nameHelp" placeholder="ex: John Smith" ng-model="order.prefill.name" ng-class="{true:'is-invalid'}[invalidity.name==true]">
+                </div>
+                <div class="form-group">
+                    <label for="pymntName" class="form-label  text-info">Contact</label>
+                    <div class="input-group">
+                        <span class="input-group-text">+91</span>
+                        <input type="number" class="form-control" placeholder="10 digit mobile phone" aria-label="contact_number" ng-model="order.prefill.contact" ng-class="{true:'is-invalid'}[invalidity.contact==true]">
+                    </div>
+                    <small>For urgent matters we shall call, else notifications on Telegram.</small>
+                </div>
+                <pin-location state="order.notes.state" pin="order.notes.pin" addr="order.notes.address"></pin-location>
+                <div class="form-group">
+                    <label for="exampleInputEmail1" class="form-label  text-info">No.of Units</label>
+                    <input ng-model="units" type="number" class="form-control" id="noOfUnits" aria-describedby="noOfUnitsHelp" placeholder="Number of units to order">
+                </div>
+                <div class="form-group">
+                    <fieldset disabled="">
+                        <label class="form-label text-info" for="disabledInput">Amount(&#8377;)</label>
+                        <!-- https://stackoverflow.com/questions/24691740/angularjs-one-way-data-binding-can-angular-do-it -->
+                        <!-- ng-value for one way binding on disabled inputs  -->
+                        <input class="form-control" id="disabledInput" disabled type="text" ng-value="order.amount | paiseAsRupee ">
+                        <small class="text-muted">Inclusive of GST + Shipping</small>
+                    </fieldset>
+                </div>
+                <!-- button that calls to server and initiates order creation -->
+                <button ng-click="init_rzp_pay()" type="submit" class="btn btn-info">Place order</button>
+            </fieldset>
+            <!-- this should be displayed only incase of error in order creation -->
+            <fieldset class="mt-2" ng-if="orderFailed!=null">
+                <div class="alert alert-dismissible alert-warning">
+                    <h4 class="alert-heading">{[orderFailed.title]}</h4>
+                    <p class="mb-0">{[orderFailed.msg]}</p>
+                </div>
+            </fieldset>
+        </form>
+    </div>
 </div>

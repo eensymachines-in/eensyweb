@@ -48,5 +48,20 @@
                 return /^[\w-!@#%&?_]{8,16}$/
             }
         })
+        $provide.provider("rzpKey", function() {
+            this.$get = function() {
+                return {
+                    // Rzp public key for test mode
+                    test: "rzp_test_Z4AumzgwmBpgQv",
+                    live: ""
+                }
+            }
+        })
+    }).filter("paiseAsRupee", function() {
+        return function(paise) {
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
+            // this formatting lets us put the number in a more currency readable format
+            return new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(paise / 100);
+        }
     })
 })()

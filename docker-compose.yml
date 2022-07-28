@@ -10,6 +10,10 @@ services:
             - "/var/log/eensyproxy:/var/log/eensyproxy"
         environment: 
             - LOGF=/var/log/eensyproxy/proxy.log
+            - RZPKEY=rzp_test_Z4AumzgwmBpgQv
+            - RZPSECRET=TQXlGbKAXteB8UYhzWqgrB2A
+        links:
+            - "mongo"
         entrypoint: ["/usr/bin/eensy/webproxy"]
     nginx:
         build: ./nginx
@@ -20,4 +24,12 @@ services:
             - "/var/log/nginx:/var/log/nginx"
         links: 
             - "goproxy"
+    srvmongo:
+        image: mongo:4.2-bionic
+        ports:
+            - 37017:27017
+        volumes: 
+        - /data/eensyweb/db:/data/db
+        tty: true
+        stdin_open: true
     

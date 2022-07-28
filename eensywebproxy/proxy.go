@@ -1,16 +1,19 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
+	"time"
 
-	utl "github.com/eensymachines-in/utilities"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 const (
@@ -74,12 +77,20 @@ func dispatchError(code int, c *gin.Context, e string) {
 	})
 }
 func init() {
-	utl.SetUpLog()
+	// utl.SetUpLog()
+	log.SetFormatter(&log.TextFormatter{
+		DisableColors: false,
+		FullTimestamp: true,
+	})
+	log.SetReportCaller(false)
+	// By default the log output is stdout and the level is info
+	log.SetOutput(os.Stdout)     // FLogF will set it main, but dfault is stdout
+	log.SetLevel(log.DebugLevel) // default level info debug but FVerbose will set it main
 }
 func main() {
 	// Setting up log configuration
-	logFile := os.Getenv("LOGF")
-	closeLogFile := utl.CustomLog(true, true, logFile) // Log direction and the level of logging
+	// logFile := os.Getenv("LOGF")
+	// closeLogFile := utl.CustomLog(true, true, logFile) // Log direction and the level of logging
 	file, err := os.Open(os.Getenv("LOGF"))
 	if err != nil {
 		log.Fatal(err)
@@ -88,7 +99,23 @@ func main() {
 	gin.DisableConsoleColor()
 	gin.DefaultWriter = io.MultiWriter(file)
 	defer file.Close()
-	defer closeLogFile()
+
+	// =========  setting up the database connection
+	// https://www.mongodb.com/community/forums/t/adding-multiple-clients/105813
+	// they recommend having a singleton client connected to the mongo db
+	// each request can have its own pointer to the database nevertheless
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://srvmongo:27017"))
+	if err != nil {
+		log.Fatalf("failed to connect to mongo database %s", err)
+	}
+	defer func() {
+		client.Disconnect(ctx)
+	}()
+	// =========
+
+	// defer closeLogFile()
 	// starting gin configuration
 	gin.SetMode(gin.DebugMode)
 
@@ -159,5 +186,7 @@ func main() {
 		})
 	})
 	r.GET("/testpay", sendIndexHtml)
+	r.POST("/orders", dbConnect(client, "orders"), rzpOrders)
+	r.POST("/payments", rzpPayments)
 	log.Fatal(r.Run(":8080"))
 }
