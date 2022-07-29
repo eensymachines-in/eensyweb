@@ -5,7 +5,8 @@
         <!-- thsi will capture the pin code of the deliverable location -->
         <div class="input-group mb-3">
             <input ng-class="{true:'is-invalid'}[err!=null]" ng-model="pin" type="number" class="form-control" placeholder="Delivery pin code" aria-label="deliverypincode" aria-describedby="button-addon2">
-            <button ng-click="check_pincode()" class="btn btn-info" type="button" id="button-addon2">Check</button>
+            <button ng-click="check_pincode()" class="btn btn-info" type="button" id="button-addon2" ng-bind-html="checkButton">
+            </button>
         </div>
     </section>
     <section ng-show="areaOptions.length>0 && blockArea==null">

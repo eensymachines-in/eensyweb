@@ -60,15 +60,18 @@
                     addr: "="
                 },
                 templateUrl: "/templates/pin-location.html",
-                controller: function($scope, $http) {
+                controller: function($scope, $http, $sce) {
+                    $scope.checkButton = $sce.trustAsHtml("Check");
                     var reset = function() {
+                        console.log("resetting variables..")
                         $scope.areaOptions = [];
                         $scope.blockArea = null; // view model for 
-                        $scope.err = null;
+                        $scope.err = null; // this will highlight the pin code input
                     };
                     reset();
                     // This will verify the pincode with 3rd party and check for delivery suitability
                     $scope.check_pincode = function() {
+                        $scope.checkButton = $sce.trustAsHtml('<i class="fas fa-circle-notch load-animate fa-spin"></i>');
                         reset();
                         $http({
                             method: "GET",
@@ -77,21 +80,20 @@
                                 'Content-Type': "application/json",
                             },
                         }).then(function(response) {
+                            $scope.checkButton = $sce.trustAsHtml("Check");
                             var data = response.data[0];
                             if (data.PostOffice != null) {
                                 $scope.state = data.PostOffice[0].State;
                                 data.PostOffice.forEach(function(po) {
-                                    // User options for the POs in the zone 
                                     $scope.areaOptions.push({
                                         title: po.Block + ", " + po.Name,
                                         select: function(bl) {
-                                            // When user selects a PO
                                             $scope.blockArea = {
                                                 title: bl
-                                            }
+                                            }; // zone options can be selected 
                                         }
                                     });
-                                });
+                                }); //options for zone selection
                             } else {
                                 // When the pin is not found this api does not emit 404
                                 // instead sends back the error in the same format 
@@ -102,6 +104,7 @@
                             }
                         }, function(response) {
                             // TODO: handle the error gracefully 
+                            $scope.checkButton = $sce.trustAsHtml("Check");
                             console.error("failed to get pin code details ..");
                             $scope.err = {
                                 msg: "failed to get pin code details"
@@ -109,7 +112,6 @@
 
                         })
                     }
-                    console.log("now inside the pinLocation directive")
                 }
             }
         })
