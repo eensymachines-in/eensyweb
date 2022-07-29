@@ -87,6 +87,7 @@
         });
 
     }).controller("testPayCtrl", function($scope, $http, rzpKey, srvPurchase, $rootScope) {
+        // TODO: remove this below statement and call it from the preceeding view
         srvPurchase.set_purchase("autolumin", 29500)
         $scope.orderFailed = null;
         $scope.units = 1;
@@ -201,38 +202,38 @@
                 console.log($scope.invalidity);
                 return;
             };
-            console.log($scope.order.notes);
-            // $http({
-            //     method: "POST",
-            //     url: "http://localhost/orders",
-            //     headers: {
-            //         'Content-Type': "application/json",
-            //     },
-            //     data: JSON.stringify({
-            //         "amount": $scope.order.amount,
-            //         "partial_payment": false,
-            //         "currency": "INR"
-            //     })
-            // }).then(function(response) {
-            //     console.log("order has been created")
-            //     $scope.order.order_id = response.data.id;
-            //     var rzp1 = new Razorpay($scope.order);
-            //     rzp1.on('payment.failed', function(response) {
-            //         console.log(response.error.code);
-            //         console.log(response.error.description);
-            //         console.log(response.error.source);
-            //         console.log(response.error.step);
-            //         console.log(response.error.reason);
-            //         console.log(response.error.metadata.order_id);
-            //         console.log(response.error.metadata.payment_id);
-            //     });
-            //     rzp1.open();
-            // }, function(data) {
-            //     $scope.orderFailed = {
-            //         title: "Failed",
-            //         msg: data.err
-            //     }
-            // })
+            $http({
+                method: "POST",
+                url: "http://localhost/orders",
+                headers: {
+                    'Content-Type': "application/json",
+                },
+                data: JSON.stringify({
+                    "amount": $scope.order.amount,
+                    "partial_payment": false,
+                    "notes": $scope.order.notes,
+                    "currency": "INR"
+                })
+            }).then(function(response) {
+                console.log("order has been created")
+                $scope.order.order_id = response.data.id;
+                var rzp1 = new Razorpay($scope.order);
+                rzp1.on('payment.failed', function(response) {
+                    console.log(response.error.code);
+                    console.log(response.error.description);
+                    console.log(response.error.source);
+                    console.log(response.error.step);
+                    console.log(response.error.reason);
+                    console.log(response.error.metadata.order_id);
+                    console.log(response.error.metadata.payment_id);
+                });
+                rzp1.open();
+            }, function(data) {
+                $scope.orderFailed = {
+                    title: "Failed",
+                    msg: data.err
+                }
+            })
 
         }
     })

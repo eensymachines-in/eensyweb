@@ -18,9 +18,10 @@ import (
 
 // RzpOrderPayload : when creating an order this is the shape of the data incoming in the request as payload
 type RzpOrderPayload struct {
-	Amount     int    `json:"amount"`
-	PartialPay bool   `json:"partial_payment"`
-	Currency   string `json:"currency"`
+	Amount     int                    `json:"amount"`
+	PartialPay bool                   `json:"partial_payment"`
+	Currency   string                 `json:"currency"`
+	Notes      map[string]interface{} `json:"notes"`
 }
 
 // RzpOrder : outgoing payload when the order is created
@@ -181,7 +182,7 @@ func rzpOrders(c *gin.Context) {
 			"currency":        order.Currency,
 			"receipt":         recipId,
 			"partial_payment": order.PartialPay,
-			"notes":           map[string]interface{}{},
+			"notes":           order.Notes,
 		}
 		body, err := client.Order.Create(data, nil)
 		if err != nil {
