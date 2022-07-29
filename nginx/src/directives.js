@@ -60,7 +60,7 @@
                     addr: "="
                 },
                 templateUrl: "/templates/pin-location.html",
-                controller: function($scope, $http, $sce) {
+                controller: function($scope, $http, $sce, $rootScope) {
                     $scope.checkButton = $sce.trustAsHtml("Check");
                     var reset = function() {
                         console.log("resetting variables..")
@@ -69,6 +69,12 @@
                         $scope.err = null; // this will highlight the pin code input
                     };
                     reset();
+                    // this will attach a message to the error and hence highlight the control as having error
+                    $rootScope.invalidate_pinloc = function(msg) {
+                        $scope.err = {
+                            msg: msg
+                        };
+                    };
                     // This will verify the pincode with 3rd party and check for delivery suitability
                     $scope.check_pincode = function() {
                         $scope.checkButton = $sce.trustAsHtml('<i class="fas fa-circle-notch load-animate fa-spin"></i>');
@@ -98,17 +104,13 @@
                                 // When the pin is not found this api does not emit 404
                                 // instead sends back the error in the same format 
                                 // but with field PostOffice == null 
-                                $scope.err = {
-                                    msg: "failed to get pin code details"
-                                }
+                                $rootScope.invalidate_pinloc("failed to get pin code details")
                             }
                         }, function(response) {
                             // TODO: handle the error gracefully 
                             $scope.checkButton = $sce.trustAsHtml("Check");
                             console.error("failed to get pin code details ..");
-                            $scope.err = {
-                                msg: "failed to get pin code details"
-                            }
+                            $rootScope.invalidate_pinloc("failed to get pin code details")
 
                         })
                     }

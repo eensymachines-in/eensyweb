@@ -86,7 +86,7 @@
 
         });
 
-    }).controller("testPayCtrl", function($scope, $http, rzpKey, srvPurchase) {
+    }).controller("testPayCtrl", function($scope, $http, rzpKey, srvPurchase, $rootScope) {
         srvPurchase.set_purchase("autolumin", 29500)
         $scope.orderFailed = null;
         $scope.units = 1;
@@ -119,12 +119,17 @@
             email: false,
             name: false,
             contact: false,
+            notes: false,
             check: function() {
                 // this shall check the validtiy of the payment fields entered by the user
                 this.email = $scope.order.prefill.email == "";
                 this.name = $scope.order.prefill.name == "";
                 this.contact = $scope.order.prefill.contact == "";
-                return this.email || this.name || this.contact;
+                this.notes = $scope.order.notes.address == "" || $scope.order.notes.pin == "" || $scope.order.notes.state == "";
+                if (this.notes == true) {
+                    $rootScope.invalidate_pinloc("Enter the pin location before the order is confirmed");
+                }
+                return this.email || this.name || this.contact || this.notes;
             }
         }
         $scope.order = {
@@ -191,7 +196,7 @@
             // completes the payment 
             // sends the payment confirmation to server again
             if ($scope.invalidity.check() == true) {
-                console.log("one or more order fields are valid");
+                console.log("one or more order fields are invalid");
                 console.warn("aborting order creation");
                 console.log($scope.invalidity);
                 return;
