@@ -122,10 +122,11 @@
             contact: false,
             notes: false,
             check: function() {
-                // this shall check the validtiy of the payment fields entered by the user
+                // https://stackoverflow.com/questions/18375929/validate-phone-number-using-javascript
+                var phnPattern = /^[0-9]{10}$/ // this can help us match the phone number to a regex pattern
                 this.email = $scope.order.prefill.email == "";
                 this.name = $scope.order.prefill.name == "";
-                this.contact = $scope.order.prefill.contact == "";
+                this.contact = $scope.order.prefill.contact == "" || !phnPattern.test($scope.order.prefill.contact);
                 this.notes = $scope.order.notes.address == "" || $scope.order.notes.pin == "" || $scope.order.notes.state == "";
                 if (this.notes == true) {
                     $rootScope.invalidate_pinloc("Enter the pin location before the order is confirmed");
