@@ -230,9 +230,11 @@
                 });
                 rzp1.open();
             }, function(data) {
+                // TODO: this needs to be handled better
+                console.error(data.status + " " + data.err)
                 $scope.orderFailed = {
-                    title: "Failed",
-                    msg: data.err
+                    title: "Order failed",
+                    msg: "failed to create order on server, try again after some time"
                 }
             })
 
