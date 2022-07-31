@@ -2,6 +2,10 @@ package main
 
 import (
 	"context"
+	"crypto/hmac"
+	"crypto/sha256"
+	"crypto/subtle"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -43,6 +47,18 @@ type RzpPaymentDone struct {
 	Signtr   string `json:"razorpay_signature"`
 }
 
+func verifyRzpPayment(done RzpPaymentDone) bool {
+	secret := os.Getenv("RZPSECRET")
+	data := fmt.Sprintf("%s|%s", done.OrderID, done.PaymntID)
+	h := hmac.New(sha256.New, []byte(secret))
+	h.Write([]byte(data))
+	sha := hex.EncodeToString(h.Sum(nil))
+	if subtle.ConstantTimeCompare([]byte(sha), []byte(done.Signtr)) == 1 {
+		return true
+	}
+	return false
+}
+
 // rzpPayments : will help get / post payment objects from/on eensymachines database
 func rzpPayments(c *gin.Context) {
 	if c.Request.Method == "POST" {
@@ -70,6 +86,11 @@ func rzpPayments(c *gin.Context) {
 			"order":   paymntDone.OrderID,
 		}).Info("Payment confirmed, verified")
 		// TODO: here the signature needs to be verified before we can call it a valid transaction
+		// https://razorpay.com/docs/payments/server-integration/go/payment-gateway/build-integration#16-verify-payment-signature
+		if !verifyRzpPayment(paymntDone) {
+			c.AbortWithStatus(http.StatusUnauthorized)
+			return
+		}
 		c.AbortWithStatus(http.StatusOK)
 		return
 	}

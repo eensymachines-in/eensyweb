@@ -176,7 +176,10 @@
                         },
                         data: JSON.stringify({
                             "razorpay_payment_id": response.razorpay_payment_id,
-                            "razorpay_order_id": response.razorpay_order_id,
+                            // https://razorpay.com/docs/payments/server-integration/go/payment-gateway/build-integration#16-verify-payment-signature
+                            // see here this forbids us from using the order id from checkout
+                            // "razorpay_order_id": response.razorpay_order_id,
+                            "razorpay_order_id": $scope.order.order_id,
                             "razorpay_signature": response.razorpay_signature
                         })
 

@@ -1,6 +1,5 @@
 {
-    "d": [
-        {
+    "d": [{
             "id": "autolumin",
             "status": "in-market",
             "title": "Autolumin",
@@ -8,12 +7,11 @@
             "short_desc": "cloud connected electrical relays",
             "desc": "Turn on/off, configure your appliances  from anywhere using handhelds. Schedule your switches to do routines. Live in home that understands you better.",
             "price": {
-                "base": 33000,
+                "base": 15000,
                 "rental": 335,
                 "maint": 500
             },
-            "features": [
-                {
+            "features": [{
                     "title": "Internet connected",
                     "val": 1
                 },
@@ -60,8 +58,7 @@
                 "Rapidly switching the power supply to the unit ON/OFF can damage the processor instantly"
             ],
             "repair_maint": "Parts that can readily replaced will be so by Eensymachines. Like everything else, all things have a lifespan. We have designed all products to be durable and reliable. But incase there is a replacement that is required you can write to us ",
-            "specs": [
-                {
+            "specs": [{
                     "title": "Power supply",
                     "value": 5,
                     "unit": "volts[DC]"
@@ -122,8 +119,7 @@
             },
             "img": "no-image.jpg",
             "more_link": "/products/aquaminder",
-            "features": [
-                {
+            "features": [{
                     "title": "Internet connected",
                     "val": 1
                 },
@@ -167,8 +163,7 @@
             },
             "img": "no-image.jpg",
             "more_link": "/products/cleverpot",
-            "features": [
-                {
+            "features": [{
                     "title": "Internet connected",
                     "val": 1
                 },
