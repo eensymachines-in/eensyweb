@@ -185,7 +185,6 @@ func main() {
 			"errMessage": "Failed to get resource at the desired location.",
 		})
 	})
-	// r.GET("/order", sendIndexHtml)
 	r.POST("/orders", dbConnect(client, "orders"), rzpOrders)
 	r.POST("/payments", rzpPayments)
 	log.Fatal(r.Run(":8080"))

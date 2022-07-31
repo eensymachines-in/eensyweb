@@ -99,7 +99,7 @@
 
         });
 
-    }).controller("testPayCtrl", function($scope, $http, rzpKey, srvPurchase, $rootScope, $location) {
+    }).controller("orderCtrl", function($scope, $http, rzpKey, srvPurchase, $rootScope, $location) {
         // TODO: remove this below statement and call it from the preceeding view
         // srvPurchase.set_purchase("autolumin", 29500)
         if (srvPurchase.purchase == null) {

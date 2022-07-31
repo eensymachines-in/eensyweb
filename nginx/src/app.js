@@ -29,11 +29,11 @@
                 templateUrl: "/views/product-detail.html"
             })
             .when("/order", {
+                // This route has no mapping on theproxy/server
+                // reason being : this route is accessible only from within the application 
+                // directly typing /order in the url bar will not / shuld not result in a page 
+                // /order has a predecessor settings for purchase - product name and rate of the product
                 templateUrl: "/views/order.html"
-            })
-            .when("/forbidden", {
-                // Forbidden error page
-                templateUrl: "/views/forbidden.html"
             })
         $provide.provider("emailPattern", function() {
             this.$get = function() {
