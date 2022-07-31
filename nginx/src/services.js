@@ -35,9 +35,16 @@
             return defered.promise;
         }
     }).service("srvPurchase", function() {
-        this.purchase = { product: "Autolumin", rate: 100 };
+        // setting the purchase field is very important
+        // this is the distinguishing factor between if order page has been arrived at from valid predecessor
+        // we do not want to let the user directly type in order url for obvious reasons
+        // when purchase is null we know there is a un-natural way of arriving at the order page
+        this.purchase = null;
         this.set_purchase = function(product, rate) {
             this.purchase = { product: product, rate: rate };
+        }
+        this.unset_purchase = function() {
+            this.purchase = null;
         }
         return this
     })

@@ -3,9 +3,7 @@
     <div class="col-12 col-md-6 offset-md-3">
         <div class="form-group  d-block">
             <!-- from here we select one of the products in the range -->
-            <select class="form-select" id="prodSelect"
-                style="width:100%;height:30px;border-radius:1ex;background-color: white;border-color: rgba(0,0,0,.2);"
-                ng-model="selc_prod" ng-options="p.title for p in products"></select>
+            <select class="form-select" id="prodSelect" style="width:100%;height:30px;border-radius:1ex;background-color: white;border-color: rgba(0,0,0,.2);" ng-model="selc_prod" ng-options="p.title for p in products"></select>
         </div>
         <div class="card mb-3">
             <!-- product title and short description -->
@@ -22,15 +20,15 @@
             </div>
             <!-- this will enlist  all the features at a glance -->
             <ul class="list-group list-group-flush">
-                <li ng-repeat="f in selc_prod.features" class="list-group-item">{[f.title]}<span
-                        class="float-right"><i class="bi" ng-class="{1:'bi-check-circle text-success',0:'bi-slash-circle text-danger'}[f.val]"></i></span></li>
+                <li ng-repeat="f in selc_prod.features" class="list-group-item">{[f.title]}<span class="float-right"><i class="bi" ng-class="{1:'bi-check-circle text-success',0:'bi-slash-circle text-danger'}[f.val]"></i></span></li>
             </ul>
             <!-- footer for redirection and more links -->
             <div class="card-body" ng-if="selc_prod.status=='in-market'">
                 <a href="{[selc_prod.more_link]}" class="card-link">More on this..</a>
+                <a ng-click="order_product()" class="card-link float-right btn btn-outline-info">Order</a>
             </div>
             <div class="card-footer text-muted" ng-if="selc_prod.status!='in-market'">
-                This product is in the making, but once we launch it, you would know. 
+                This product is in the making, but once we launch it, you would know.
             </div>
         </div>
     </div>

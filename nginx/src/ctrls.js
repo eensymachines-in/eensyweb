@@ -8,8 +8,21 @@
             console.error("Failed to get eensymachines data from server");
             $rootScope.err = error;
         })
-    }).controller("productListCtrl", function($scope, srvHttp) {
+    }).controller("productListCtrl", function($scope, srvHttp, srvPurchase, $location) {
         $scope.selc_prod = null;
+        srvPurchase.unset_purchase(); // purchase object to be set only when product is selected
+        $scope.$watch("selc_prod", function(after, before) {
+            if (after !== null && after !== undefined) {
+                // Every time there is a change in the product being selected
+                // we change srvPurchase, and set the values
+                // a link on the html page would take us to the order page
+                srvPurchase.set_purchase(after.id, after.price.base);
+                console.debug(srvPurchase.purchase);
+            }
+        });
+        $scope.order_product = function() {
+            $location.url("/order");
+        };
         // gets the bunch of products and allows to select one product at a time 
         srvHttp.download_data("products.json").then(function(data) {
             $scope.products = data;
@@ -86,9 +99,14 @@
 
         });
 
-    }).controller("testPayCtrl", function($scope, $http, rzpKey, srvPurchase, $rootScope) {
+    }).controller("testPayCtrl", function($scope, $http, rzpKey, srvPurchase, $rootScope, $location) {
         // TODO: remove this below statement and call it from the preceeding view
-        srvPurchase.set_purchase("autolumin", 29500)
+        // srvPurchase.set_purchase("autolumin", 29500)
+        if (srvPurchase.purchase == null) {
+            // when the static purchase object is not set this should move away from the order page
+            $location.url("/forbidden");
+            return
+        }
         $scope.orderFailed = null;
         $scope.units = 1;
         $scope.pinCode;

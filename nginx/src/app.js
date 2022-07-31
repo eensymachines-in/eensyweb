@@ -28,8 +28,12 @@
             .when("/products/:id", {
                 templateUrl: "/views/product-detail.html"
             })
-            .when("/testpay", {
-                templateUrl: "/views/test-pay.html"
+            .when("/order", {
+                templateUrl: "/views/order.html"
+            })
+            .when("/forbidden", {
+                // Forbidden error page
+                templateUrl: "/views/forbidden.html"
             })
         $provide.provider("emailPattern", function() {
             this.$get = function() {
