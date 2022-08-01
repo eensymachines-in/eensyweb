@@ -47,16 +47,36 @@ type RzpPaymentDone struct {
 	Signtr   string `json:"razorpay_signature"`
 }
 
-func verifyRzpPayment(done RzpPaymentDone) bool {
+// verifyRzpPayment: verifies the razorpay payment from the signature
+// creates a new SHA signature with order id and payment id using the same crypto algorithm
+// then compares the hash with payment signature
+// Error incase there is crypto failure or bad inputs
+func verifyRzpPayment(done RzpPaymentDone) (bool, IApiErr) {
 	secret := os.Getenv("RZPSECRET")
+	if secret == "" {
+		log.Error("razorpay secret is not loaded on environment")
+		return false, &ApiErr{fmt.Errorf("verifyRzpPayment:invalid razorpay secret key, check environment if loaded"), ErrEnv}
+	}
 	data := fmt.Sprintf("%s|%s", done.OrderID, done.PaymntID)
 	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
+	_, err := h.Write([]byte(data))
+	if err != nil {
+		log.WithFields(log.Fields{
+			"order":   done.OrderID,
+			"payment": done.PaymntID,
+			"err":     err,
+		}).Error("failed to create sha signature")
+		return false, &ApiErr{fmt.Errorf("verifyRzpPayment:failed to create sha256 signature for verification %s", err), ErrEncrypt}
+	}
 	sha := hex.EncodeToString(h.Sum(nil))
 	if subtle.ConstantTimeCompare([]byte(sha), []byte(done.Signtr)) == 1 {
-		return true
+		return true, nil
 	}
-	return false
+	log.WithFields(log.Fields{
+		"order":   done.OrderID,
+		"payment": done.PaymntID,
+	}).Warn("payment signature is not authenticated")
+	return false, nil
 }
 
 // rzpPayments : will help get / post payment objects from/on eensymachines database
@@ -85,86 +105,19 @@ func rzpPayments(c *gin.Context) {
 			"payment": paymntDone.PaymntID,
 			"order":   paymntDone.OrderID,
 		}).Info("Payment confirmed, verified")
-		// TODO: here the signature needs to be verified before we can call it a valid transaction
 		// https://razorpay.com/docs/payments/server-integration/go/payment-gateway/build-integration#16-verify-payment-signature
-		if !verifyRzpPayment(paymntDone) {
+		yes, apiErr := verifyRzpPayment(paymntDone)
+		if apiErr != nil {
+			Dispatch(apiErr, c, "rzpPayments/POST")
+			return
+		}
+		if !yes {
 			c.AbortWithStatus(http.StatusUnauthorized)
 			return
 		}
 		c.AbortWithStatus(http.StatusOK)
 		return
 	}
-}
-
-/* ApiErrCode : error code on which the error dispatch hinges
- */
-type ApiErrCode int
-
-// Enum for types of error
-const (
-	ErrInvlPayload ApiErrCode = iota + 8400
-	ErrExtApi
-	ErrDbConn
-	ErrQry
-)
-
-// IApiErr : interface over which a mixing function will Dispatch will consume error
-type IApiErr interface {
-	Err() string
-	Code() int
-	ErrMsg() string
-}
-
-// ApiErr : implements the interface, and the objct that middleware will sedn for disptach
-type ApiErr struct {
-	e    error
-	code ApiErrCode
-}
-
-//================= IApiErr implementation=========
-func (ape *ApiErr) Err() string {
-	return ape.e.Error()
-}
-func (ape *ApiErr) Code() int {
-	switch ape.code {
-	case ErrInvlPayload:
-		return http.StatusBadRequest
-	case ErrExtApi, ErrDbConn:
-		return http.StatusBadGateway
-	case ErrQry:
-		return http.StatusInternalServerError
-	default:
-		return http.StatusInternalServerError
-	}
-}
-func (ape *ApiErr) ErrMsg() string {
-	switch ape.code {
-	case ErrInvlPayload:
-		return "Request inputs invalid, try checking the inputs and resend"
-	case ErrExtApi:
-		return "Failed external api call. This happens when a 3rd party server has error."
-	case ErrDbConn:
-		return "Failed database connection. Try in sometime."
-	case ErrQry:
-		return "failed to get data, one or more operations on the server failed."
-	default:
-		return "Unknown error! Something on the server seems to be broken"
-	}
-}
-
-// ======================
-// Dispatch : Mixing functionthat will evntually cross fit the error to the gin Context and also log the error
-// Uses the IApiErr interface
-
-func Dispatch(apie IApiErr, c *gin.Context, trace string) {
-	log.WithFields(log.Fields{
-		"err": apie.Err(),
-	}).Errorf("%s:%s", c.Request.URL.Path, trace)
-	c.AbortWithStatusJSON(apie.Code(), gin.H{
-		"err": apie.ErrMsg(),
-		// this the error message that is displayed in the front end
-	})
-	return
 }
 
 // dbConnect : collection pointer injection onto the context
