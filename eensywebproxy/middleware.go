@@ -17,7 +17,6 @@ import (
 	"github.com/google/uuid"
 	razorpay "github.com/razorpay/razorpay-go"
 	log "github.com/sirupsen/logrus"
-	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -80,14 +79,37 @@ func verifyRzpPayment(done RzpPaymentDone) (bool, IApiErr) {
 	return false, nil
 }
 
+// PaymentDetails : details of a single payment
+type PaymentDetails struct {
+	Id           string `json:"id"`
+	InvoiceId    string `json:"invoice_id"`
+	Amount       int64  `json:"amount"`
+	Refunded     int64  `json:"amount_refunded"`
+	Fee          int64  `json:"fee"`
+	Tax          int64  `json:"tax"`
+	Captured     bool   `json:"captured"`
+	Intrntl      bool   `json:"international"`
+	RefundStatus string `json:"refund_status"`
+	Status       string `json:"status"`
+	Bank         string `json:"bank"`
+	Method       string `json:"method"`
+	Contact      string `json:"contact"`
+	CreatedAt    int64  `json:"created_at"`
+	ErrCode      int    `json:"error_code"`
+	ErrDesc      string `json:"error_description"`
+	ErrReason    string `json:"error_reason"`
+	ErrSrc       string `json:"error_source"`
+	ErrStep      string `json:"error_step"`
+}
+
 // rzpPayments : will help get / post payment objects from/on eensymachines database
 func rzpPayments(c *gin.Context) {
 	if c.Request.Method == "POST" {
-		val, ok := c.Get("dbcoll")
-		if !ok {
-			Dispatch(&ApiErr{fmt.Errorf("failed to get dbconnection in middleware"), ErrDbConn}, c, "rzpPayments/dbcoll")
-			return
-		}
+		// val, ok := c.Get("dbcoll")
+		// if !ok {
+		// 	Dispatch(&ApiErr{fmt.Errorf("failed to get dbconnection in middleware"), ErrDbConn}, c, "rzpPayments/dbcoll")
+		// 	return
+		// }
 		// when the payment is successufully completed - we get a post request here denoting save in the database
 		// this will also verifiy the signature of the payment so as to be verified
 		defer c.Request.Body.Close()
@@ -121,20 +143,36 @@ func rzpPayments(c *gin.Context) {
 			c.AbortWithStatus(http.StatusUnauthorized)
 			return
 		}
-		ordersColl := val.(*mongo.Collection)
-		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-		defer cancel()
-		filter := bson.M{"id": paymntDone.OrderID}
-		// TODO: for now we are pushing only the payment id
-		// but we need to push more payment details than this
-		// these details need to come from client side
-		// RzpPaymentDone the object needs to change
-		update := bson.M{"$addToSet": bson.M{"payments": paymntDone.PaymntID}}
-		_, err = ordersColl.UpdateOne(ctx, filter, update)
+		// ordersColl := val.(*mongo.Collection)
+		// ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		// defer cancel()
+		// filter := bson.M{"id": paymntDone.OrderID}
+		// // TODO: for now we are pushing only the payment id
+		// // but we need to push more payment details than this
+		// // these details need to come from client side
+		// // RzpPaymentDone the object needs to change
+		// // update := bson.M{"$addToSet": bson.M{"payments": paymntDone.PaymntID}}
+		// // _, err = ordersColl.UpdateOne(ctx, filter, update)
+		// // if err != nil {
+		// // 	Dispatch(&ApiErr{e: fmt.Errorf("failed to update orders of verified payments"), code: ErrQry}, c, "rzpPayments/UpdateOne")
+		// // 	return
+		// // }
+		client := razorpay.NewClient(os.Getenv("RZPKEY"), os.Getenv("RZPSECRET"))
+		body, err := client.Payment.Fetch(paymntDone.PaymntID, nil, nil)
 		if err != nil {
-			Dispatch(&ApiErr{e: fmt.Errorf("failed to update orders of verified payments"), code: ErrQry}, c, "rzpPayments/UpdateOne")
+			Dispatch(&ApiErr{e: fmt.Errorf("failed to get status of payment from RazorPay"), code: ErrExtApi}, c, "rzpPayments/Payment.Fetch")
 			return
 		}
+		byt, _ = json.Marshal(body)
+		payDetails := PaymentDetails{}
+		if json.Unmarshal(byt, &payDetails) != nil {
+			Dispatch(&ApiErr{e: fmt.Errorf("failed to unmarshal payment details"), code: ErrQry}, c, "rzpPayments/Unmarshal")
+			return
+		}
+		log.WithFields(log.Fields{
+			"payment_details": payDetails,
+		}).Debug("payment details from razor pay")
+		// TODO: once we have the payment details now can be pushed onto the database
 		c.AbortWithStatus(http.StatusOK)
 		return
 	}

@@ -166,8 +166,9 @@
             handler: function(response) {
                 // this is out of angularjs scope 
                 // once we have the confirmation of payment - success/failure we go ahead to post the same to eensy server
+                console.log("payment success handler: ");
+                console.debug(response);
                 $scope.$apply(function() {
-                    // for the url to be hit we need service support to form the base url
                     $http({
                         method: "POST",
                         url: "http://localhost/payments",
@@ -189,9 +190,6 @@
                         console.log("Payment could be done, not confirmed")
                     })
                 })
-                console.log(response.razorpay_payment_id);
-                console.log(response.razorpay_order_id);
-                console.log(response.razorpay_signature)
             },
             prefill: {
                 // this has to come from a form that user fills out 
