@@ -184,8 +184,22 @@
                             "razorpay_signature": response.razorpay_signature
                         })
 
-                    }).then(function(response) {
-                        console.log("payment confirmed..")
+                    }).then(function(res) {
+                        // Once the payment is verified we can patch the order for its payment 
+                        // Shouldnt this be done for when the payment fails ?
+                        // this patch needs to get order details from rzp and update in eensymachines server
+                        // if the payment is complete the order would be updated on rzp site, and such order is ready to be shipped
+
+                        console.log("payment confirmed, now updating order")
+                        $http({
+                            method: "PATCH",
+                            url: "http://localhost/orders/" + $scope.order.order_id,
+                            headers: { 'Content-Type': "application/json" }
+                        }).then(function(res) {
+                            console.log("order updated for the patyment, ready for shipment")
+                        }, function(res) {
+                            console.error("unable to update order for payment")
+                        })
                     }, function(data) {
                         console.log("Payment could be done, not confirmed")
                     })

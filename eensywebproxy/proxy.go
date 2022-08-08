@@ -186,6 +186,7 @@ func main() {
 		})
 	})
 	r.POST("/orders", dbConnect(client, "orders"), rzpOrders)
+	r.PATCH("/orders/:oid", dbConnect(client, "orders"), rzpOrder)
 	r.POST("/payments", dbConnect(client, "orders"), rzpPayments)
 	log.Fatal(r.Run(":8080"))
 }

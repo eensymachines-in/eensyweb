@@ -17,6 +17,7 @@ import (
 	"github.com/google/uuid"
 	razorpay "github.com/razorpay/razorpay-go"
 	log "github.com/sirupsen/logrus"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -32,14 +33,18 @@ type RzpOrderPayload struct {
 // I thought of using this but then sending out a simple map[string]interface{} is sufficing
 // XXX: can used in the future
 type RzpOrder struct {
-	Amount     int    `json:"amount"`
-	AmountDue  int    `json:"amount_due"`
-	AmountPaid int    `json:"amount_paid"`
-	Attempts   int    `json:"attempts"`
-	Currency   string `json:"currency"`
-	Id         string `json:"id"`
-	Receipt    string `json:"receipt"`
-	Status     string `json:"status"`
+	// Amounts are in paise and not Rupees hence the integer space required is large
+	Amount     int64 `json:"amount"`
+	AmountDue  int64 `json:"amount_due"`
+	AmountPaid int64 `json:"amount_paid"`
+	// attempts cannot be more than 100 in anycase hence a shorter version of the integer
+	Attempts int8   `json:"attempts"`
+	Currency string `json:"currency"`
+	Id       string `json:"id"`
+	Receipt  string `json:"receipt"`
+	Status   string `json:"status"`
+	// TODO: Payments attempts are in slice
+	Payments []PaymentDetails `json:"payments,omitempty"`
 }
 type RzpPaymentDone struct {
 	PaymntID string `json:"razorpay_payment_id"`
@@ -158,6 +163,50 @@ func dbConnect(client *mongo.Client, collName string) gin.HandlerFunc {
 	}
 }
 
+// rzpOrder : this deals with one order at a time
+func rzpOrder(c *gin.Context) {
+	orderId := c.Param("oid")
+	client := razorpay.NewClient(os.Getenv("RZPKEY"), os.Getenv("RZPSECRET"))
+	val, ok := c.Get("dbcoll")
+	if !ok {
+		Dispatch(&ApiErr{fmt.Errorf("failed to get DB connection"), ErrDbConn}, c, "rzpOrders/dbcoll")
+		return
+	}
+	ordersColl := val.(*mongo.Collection)
+	if c.Request.Method == "PATCH" {
+		/*Once the payment is complete - success / failure the order needs to be patched for the details */
+		// Getting order details from Rzp
+		// This will have order details after the payment has been updated
+		body, err := client.Order.Fetch(orderId, nil, nil)
+		byt, _ := json.Marshal(body)
+		rzpOrder := RzpOrder{}
+		json.Unmarshal(byt, &rzpOrder)
+		// Now getting the payments for the order
+		body, err = client.Order.Payments(orderId, nil, nil)
+		payments := struct {
+			Items []PaymentDetails `json:"items"`
+		}{}
+		byt, _ = json.Marshal(body)
+		json.Unmarshal(byt, &payments)
+		// attaching the payments to the order object
+		for _, p := range payments.Items {
+			rzpOrder.Payments = append(rzpOrder.Payments, p)
+		}
+		// Updating the Eensy Machines database
+		// Order object is replaced
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		// We are replacing the object and not updating it
+		_, err = ordersColl.ReplaceOne(ctx, bson.M{"id": rzpOrder.Id}, rzpOrder)
+		if err != nil {
+			Dispatch(&ApiErr{err, ErrQry}, c, "rzpOrders/Order.Create")
+			return
+		}
+		c.AbortWithStatus(http.StatusOK)
+		return
+	}
+}
+
 // rzpOrders : middleware function that is called when RazorPay API is invoked
 func rzpOrders(c *gin.Context) {
 	// when the client would want to create a new order
@@ -192,6 +241,9 @@ func rzpOrders(c *gin.Context) {
 			Dispatch(&ApiErr{err, ErrExtApi}, c, "rzpOrders/Order.Create")
 			return
 		}
+		byt, _ = json.Marshal(body)
+		rzpOrder := RzpOrder{}
+		json.Unmarshal(byt, &rzpOrder)
 		// this newly created order needs to be pushed to the datbase
 		val, ok := c.Get("dbcoll")
 		if !ok {
@@ -201,7 +253,7 @@ func rzpOrders(c *gin.Context) {
 		ordersColl := val.(*mongo.Collection)
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
-		_, err = ordersColl.InsertOne(ctx, body)
+		_, err = ordersColl.InsertOne(ctx, rzpOrder)
 		if err != nil {
 			Dispatch(&ApiErr{err, ErrQry}, c, "rzpOrders/Order.Create")
 			return
