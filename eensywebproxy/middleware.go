@@ -2,10 +2,6 @@ package main
 
 import (
 	"context"
-	"crypto/hmac"
-	"crypto/sha256"
-	"crypto/subtle"
-	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -14,98 +10,11 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 	razorpay "github.com/razorpay/razorpay-go"
 	log "github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
-
-// RzpOrderPayload : when creating an order this is the shape of the data incoming in the request as payload
-type RzpOrderPayload struct {
-	Amount     int                    `json:"amount"`
-	PartialPay bool                   `json:"partial_payment"`
-	Currency   string                 `json:"currency"`
-	Notes      map[string]interface{} `json:"notes"`
-}
-
-// RzpOrder : outgoing payload when the order is created
-// I thought of using this but then sending out a simple map[string]interface{} is sufficing
-// XXX: can used in the future
-type RzpOrder struct {
-	// Amounts are in paise and not Rupees hence the integer space required is large
-	Amount     int64 `json:"amount"`
-	AmountDue  int64 `json:"amount_due"`
-	AmountPaid int64 `json:"amount_paid"`
-	// attempts cannot be more than 100 in anycase hence a shorter version of the integer
-	Attempts int8   `json:"attempts"`
-	Currency string `json:"currency"`
-	Id       string `json:"id"`
-	Receipt  string `json:"receipt"`
-	Status   string `json:"status"`
-	// TODO: Payments attempts are in slice
-	Payments []PaymentDetails `json:"payments,omitempty"`
-}
-type RzpPaymentDone struct {
-	PaymntID string `json:"razorpay_payment_id"`
-	OrderID  string `json:"razorpay_order_id"`
-	Signtr   string `json:"razorpay_signature"`
-}
-
-// verifyRzpPayment: verifies the razorpay payment from the signature
-// creates a new SHA signature with order id and payment id using the same crypto algorithm
-// then compares the hash with payment signature
-// Error incase there is crypto failure or bad inputs
-func verifyRzpPayment(done RzpPaymentDone) (bool, IApiErr) {
-	secret := os.Getenv("RZPSECRET")
-	if secret == "" {
-		log.Error("razorpay secret is not loaded on environment")
-		return false, &ApiErr{fmt.Errorf("verifyRzpPayment:invalid razorpay secret key, check environment if loaded"), ErrEnv}
-	}
-	data := fmt.Sprintf("%s|%s", done.OrderID, done.PaymntID)
-	h := hmac.New(sha256.New, []byte(secret))
-	_, err := h.Write([]byte(data))
-	if err != nil {
-		log.WithFields(log.Fields{
-			"order":   done.OrderID,
-			"payment": done.PaymntID,
-			"err":     err,
-		}).Error("failed to create sha signature")
-		return false, &ApiErr{fmt.Errorf("verifyRzpPayment:failed to create sha256 signature for verification %s", err), ErrEncrypt}
-	}
-	sha := hex.EncodeToString(h.Sum(nil))
-	if subtle.ConstantTimeCompare([]byte(sha), []byte(done.Signtr)) == 1 {
-		return true, nil
-	}
-	log.WithFields(log.Fields{
-		"order":   done.OrderID,
-		"payment": done.PaymntID,
-	}).Warn("payment signature is not authenticated")
-	return false, nil
-}
-
-// PaymentDetails : details of a single payment
-type PaymentDetails struct {
-	Id           string `json:"id"`
-	InvoiceId    string `json:"invoice_id"`
-	Amount       int64  `json:"amount"`
-	Refunded     int64  `json:"amount_refunded"`
-	Fee          int64  `json:"fee"`
-	Tax          int64  `json:"tax"`
-	Captured     bool   `json:"captured"`
-	Intrntl      bool   `json:"international"`
-	RefundStatus string `json:"refund_status"`
-	Status       string `json:"status"`
-	Bank         string `json:"bank"`
-	Method       string `json:"method"`
-	Contact      string `json:"contact"`
-	CreatedAt    int64  `json:"created_at"`
-	ErrCode      int    `json:"error_code"`
-	ErrDesc      string `json:"error_description"`
-	ErrReason    string `json:"error_reason"`
-	ErrSrc       string `json:"error_source"`
-	ErrStep      string `json:"error_step"`
-}
 
 // rzpPayments : will help get / post payment objects from/on eensymachines database
 // when the payment is done= success/failure this will receive a post request
@@ -214,55 +123,65 @@ func rzpOrders(c *gin.Context) {
 	// TODO: this client being created has to come from another middleware
 	client := razorpay.NewClient(os.Getenv("RZPKEY"), os.Getenv("RZPSECRET"))
 	defer c.Request.Body.Close()
+	val, ok := c.Get("dbcoll")
+	if !ok {
+		Dispatch(&ApiErr{nil, ErrDbConn}, c, "rzpOrders/dbcoll")
+		return
+	}
+	ordersColl := val.(*mongo.Collection)
 	if c.Request.Method == "POST" {
 		byt, err := ioutil.ReadAll(c.Request.Body)
 		if err != nil {
 			Dispatch(&ApiErr{err, ErrInvlPayload}, c, "rzpOrders/ReadAll")
 			return
 		}
-		order := RzpOrderPayload{}
-		if err := json.Unmarshal(byt, &order); err != nil {
+		payload := RzpOrderPayload{}
+		if err := json.Unmarshal(byt, &payload); err != nil {
 			Dispatch(&ApiErr{err, ErrInvlPayload}, c, "rzpOrders/Unmarshal")
 			return
 		}
-		// generating a new uuid for the receiptm
-		// recep_uuid(last 12 characters)
-		uuid := uuid.New().String()
-		recipId := fmt.Sprintf("recep_%s", uuid[len(uuid)-12:])
-		data := map[string]interface{}{
-			"amount":          order.Amount,
-			"currency":        order.Currency,
-			"receipt":         recipId,
-			"partial_payment": order.PartialPay,
-			"notes":           order.Notes,
+		order, apiErr := CreateOrder(payload, ordersColl, client)
+		if apiErr != nil {
+			Dispatch(apiErr, c, "rzpOrders/POST")
 		}
-		body, err := client.Order.Create(data, nil)
-		if err != nil {
-			Dispatch(&ApiErr{err, ErrExtApi}, c, "rzpOrders/Order.Create")
-			return
-		}
-		byt, _ = json.Marshal(body)
-		rzpOrder := RzpOrder{}
-		json.Unmarshal(byt, &rzpOrder)
-		// this newly created order needs to be pushed to the datbase
-		val, ok := c.Get("dbcoll")
-		if !ok {
-			Dispatch(&ApiErr{err, ErrDbConn}, c, "rzpOrders/dbcoll")
-			return
-		}
-		ordersColl := val.(*mongo.Collection)
-		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-		defer cancel()
-		_, err = ordersColl.InsertOne(ctx, rzpOrder)
-		if err != nil {
-			Dispatch(&ApiErr{err, ErrQry}, c, "rzpOrders/Order.Create")
-			return
-		}
-		log.WithFields(log.Fields{
-			"id": body["id"],
-		}).Info("Created new order")
+		// // generating a new uuid for the receiptm
+		// // recep_uuid(last 12 characters)
+		// uuid := uuid.New().String()
+		// recipId := fmt.Sprintf("recep_%s", uuid[len(uuid)-12:])
+		// data := map[string]interface{}{
+		// 	"amount":          order.Amount,
+		// 	"currency":        order.Currency,
+		// 	"receipt":         recipId,
+		// 	"partial_payment": order.PartialPay,
+		// 	"notes":           order.Notes,
+		// }
+		// body, err := client.Order.Create(data, nil)
+		// if err != nil {
+		// 	Dispatch(&ApiErr{err, ErrExtApi}, c, "rzpOrders/Order.Create")
+		// 	return
+		// }
+		// byt, _ = json.Marshal(body)
+		// rzpOrder := RzpOrder{}
+		// json.Unmarshal(byt, &rzpOrder)
+		// // this newly created order needs to be pushed to the datbase
+		// val, ok := c.Get("dbcoll")
+		// if !ok {
+		// 	Dispatch(&ApiErr{err, ErrDbConn}, c, "rzpOrders/dbcoll")
+		// 	return
+		// }
+		// ordersColl := val.(*mongo.Collection)
+		// ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		// defer cancel()
+		// _, err = ordersColl.InsertOne(ctx, rzpOrder)
+		// if err != nil {
+		// 	Dispatch(&ApiErr{err, ErrQry}, c, "rzpOrders/Order.Create")
+		// 	return
+		// }
+		// log.WithFields(log.Fields{
+		// 	"id": body["id"],
+		// }).Info("Created new order")
 		// When the order was created we send back the order for payment processing
-		c.AbortWithStatusJSON(http.StatusOK, body)
+		c.AbortWithStatusJSON(http.StatusOK, order)
 		// ++++++++++++++++
 	}
 }
