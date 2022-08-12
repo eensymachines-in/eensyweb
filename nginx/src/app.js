@@ -35,6 +35,9 @@
                 // /order has a predecessor settings for purchase - product name and rate of the product
                 templateUrl: "/views/order.html"
             })
+            .when("/order-done", {
+                templateUrl: "/views/order-done.html"
+            })
         $provide.provider("emailPattern", function() {
             this.$get = function() {
                 // [\w] is the same as [A-Za-z0-9_-]

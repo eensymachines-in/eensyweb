@@ -14,6 +14,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/razorpay/razorpay-go"
 	log "github.com/sirupsen/logrus"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -118,7 +119,7 @@ func CreateOrder(pl RzpOrderPayload, coll *mongo.Collection, rzpcl *razorpay.Cli
 	data := map[string]interface{}{
 		"amount":          pl.Amount,
 		"currency":        pl.Currency,
-		"receipt":         recipId,
+		"receipt":         recipId, //this is generated
 		"partial_payment": pl.PartialPay,
 		"notes":           pl.Notes,
 	}
@@ -160,4 +161,43 @@ func CreateOrder(pl RzpOrderPayload, coll *mongo.Collection, rzpcl *razorpay.Cli
 		"order_id": order.Id,
 	}).Info("created new order")
 	return &order, nil
+}
+
+// UpdateOrder after the payment has been done this helps to synchronize various fields on the order including the payments fields
+// Fields on order : Amount paid, due, attempts of payments, payments
+// Once the payment is done, RZP services will have the latest data for the order - this needs to be synchronized here on the Eensymachines db
+func UpdateOrder(orderId string, coll *mongo.Collection, rzpcl *razorpay.Client) IApiErr {
+	if orderId == "" || coll == nil || rzpcl == nil {
+		return &ApiErr{e: fmt.Errorf("orderid, dbcollection or the rzp client is invalid"), code: ErrDbConn}
+	}
+	body, err := rzpcl.Order.Fetch(orderId, nil, nil)
+	if err != nil {
+		return &ApiErr{e: fmt.Errorf("failed to fetch order details %s: %s", orderId, err), code: ErrExtApi}
+	}
+	byt, _ := json.Marshal(body)
+	rzpOrder := RzpOrder{}
+	json.Unmarshal(byt, &rzpOrder)
+	// Now getting the payments for the order
+	body, err = rzpcl.Order.Payments(orderId, nil, nil)
+	if err != nil {
+		return &ApiErr{e: fmt.Errorf("failed to fetch payment details for order %s: %s", orderId, err), code: ErrExtApi}
+	}
+	payments := struct {
+		Items []PaymentDetails `json:"items"`
+	}{}
+	byt, _ = json.Marshal(body)
+	json.Unmarshal(byt, &payments)
+	// attaching the payments to the order object
+	for _, p := range payments.Items {
+		rzpOrder.Payments = append(rzpOrder.Payments, p)
+	}
+	// Updating our database with payments done
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	// We are replacing the object and not updating it
+	_, err = coll.ReplaceOne(ctx, bson.M{"id": rzpOrder.Id}, rzpOrder)
+	if err != nil {
+		return &ApiErr{e: fmt.Errorf("failed to replace order in database %s: %s", orderId, err), code: ErrQry}
+	}
+	return nil
 }

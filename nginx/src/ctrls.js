@@ -109,23 +109,6 @@
         }
         $scope.orderFailed = null;
         $scope.units = 1;
-        $scope.pinCode;
-        $scope.location = {
-            pin: 0,
-            state: "",
-            block: "",
-            // this can let user select the broader area of delivery
-            areasList: {
-                disp: false,
-                options: [],
-                select: "", // the selected area
-            },
-            addressTxtBox: {
-                addr: "",
-                disp: false
-            }
-        };
-
         // somehow we have to see how we can send in rateOfUnit to this controller from another one
         // or is it possible to pass from routes?
         var rateOfUnit = srvPurchase.purchase.rate * 100;
@@ -152,6 +135,26 @@
                 return this.email || this.name || this.contact || this.notes;
             }
         }
+        var makePostPaymntReq = function(oid, pid, sig) {
+            // payment when done - success/ failure it needs to send the details to the server 
+            // incase the payment is success - signature is verified and order is updated 
+            // incase the payment is failure - the order is updated, signature is empty string
+            return {
+                method: "POST",
+                url: "http://localhost/payments",
+                headers: {
+                    'Content-Type': "application/json",
+                },
+                data: JSON.stringify({
+                    // https://razorpay.com/docs/payments/server-integration/go/payment-gateway/build-integration#16-verify-payment-signature
+                    // see here this forbids us from using the order id from checkout
+                    // "razorpay_order_id": response.razorpay_order_id,
+                    "razorpay_payment_id": pid,
+                    "razorpay_order_id": oid,
+                    "razorpay_signature": sig
+                })
+            }
+        }
         $scope.order = {
             // this has to come a provider
             key: rzpKey.test,
@@ -169,40 +172,12 @@
                 console.log("payment success handler: ");
                 console.debug(response);
                 $scope.$apply(function() {
-                    $http({
-                        method: "POST",
-                        url: "http://localhost/payments",
-                        headers: {
-                            'Content-Type': "application/json",
-                        },
-                        data: JSON.stringify({
-                            "razorpay_payment_id": response.razorpay_payment_id,
-                            // https://razorpay.com/docs/payments/server-integration/go/payment-gateway/build-integration#16-verify-payment-signature
-                            // see here this forbids us from using the order id from checkout
-                            // "razorpay_order_id": response.razorpay_order_id,
-                            "razorpay_order_id": $scope.order.order_id,
-                            "razorpay_signature": response.razorpay_signature
+                    $http(makePostPaymntReq($scope.order.order_id, response.razorpay_payment_id, response.razorpay_signature))
+                        .then(function(res) {
+                            console.log("payment received and verified")
+                        }, function(data) {
+                            console.log("Payment received, not verified")
                         })
-
-                    }).then(function(res) {
-                        // Once the payment is verified we can patch the order for its payment 
-                        // Shouldnt this be done for when the payment fails ?
-                        // this patch needs to get order details from rzp and update in eensymachines server
-                        // if the payment is complete the order would be updated on rzp site, and such order is ready to be shipped
-
-                        console.log("payment confirmed, now updating order")
-                        $http({
-                            method: "PATCH",
-                            url: "http://localhost/orders/" + $scope.order.order_id,
-                            headers: { 'Content-Type': "application/json" }
-                        }).then(function(res) {
-                            console.log("order updated for the patyment, ready for shipment")
-                        }, function(res) {
-                            console.error("unable to update order for payment")
-                        })
-                    }, function(data) {
-                        console.log("Payment could be done, not confirmed")
-                    })
                 })
             },
             prefill: {
@@ -253,13 +228,17 @@
                 $scope.order.order_id = response.data.id;
                 var rzp1 = new Razorpay($scope.order);
                 rzp1.on('payment.failed', function(response) {
-                    console.log(response.error.code);
-                    console.log(response.error.description);
-                    console.log(response.error.source);
-                    console.log(response.error.step);
-                    console.log(response.error.reason);
-                    console.log(response.error.metadata.order_id);
-                    console.log(response.error.metadata.payment_id);
+                    // this is when payment fails
+                    console.log(response);
+                    $scope.$apply(function() {
+                        $http(makePostPaymntReq(response.error.metadata.order_id, response.error.metadata.payment_id, ""))
+                            .then(function(res) {
+                                console.log("payment failed order updated")
+                            }, function(data) {
+                                console.log("payment failed, order not updated.")
+                            })
+                    })
+
                 });
                 rzp1.open();
             }, function(data) {

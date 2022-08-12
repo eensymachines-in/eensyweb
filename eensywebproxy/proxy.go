@@ -118,7 +118,6 @@ func main() {
 	// defer closeLogFile()
 	// starting gin configuration
 	gin.SetMode(gin.DebugMode)
-
 	r := gin.Default()
 	r.LoadHTMLGlob(fmt.Sprintf("%s/pages/*", statics))
 	r.GET("/", sendIndexHtml)
@@ -186,7 +185,7 @@ func main() {
 		})
 	})
 	r.POST("/orders", dbConnect(client, "orders"), rzpOrders)
-	r.PATCH("/orders/:oid", dbConnect(client, "orders"), rzpOrder)
+	// r.PATCH("/orders/:oid", dbConnect(client, "orders"), rzpOrder)
 	r.POST("/payments", dbConnect(client, "orders"), rzpPayments)
 	log.Fatal(r.Run(":8080"))
 }
