@@ -173,6 +173,7 @@ func main() {
 	r.GET("/blogs", sendIndexHtml)
 	r.GET("/products/:bid", sendIndexHtml)
 	r.GET("/products", sendIndexHtml)
+	r.GET("/paymnt-done/:oid", sendIndexHtml)
 	r.GET("/about", sendIndexHtml)
 	r.GET("/error", func(c *gin.Context) {
 		// Sends out an error page

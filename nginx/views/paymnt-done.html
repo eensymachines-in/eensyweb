@@ -1,0 +1,12 @@
+<div class="row my-5">
+    <div class="col-12 col-md-6 offset-md-3" ng-controller="paymntConfrimCtrl">
+        <h1 class="text-center text-primary"><i class="fa-regular fa-circle-check fa-3x"></i></h1>
+        <h3 class="text-center my-3">Thanks for your order</h3>
+        <p class="text-center">Typically our products take a week for dispatch. We shall address the consignment to the same stated during the payment.</p>
+        <p class="text-center">If you haven't already please install Telegram messaging App for live updates on your order.</p>
+        <p class="text-center">For reference purposes you can quote order number <small><button ng-click="copy_clipboard()" class="btn btn-outline-primary">{[orderid]}</button></small></p>
+        <div class="d-grid gap-2">
+            <a href="/products" type="button" class="btn btn-primary btn-block">Back to products</a>
+        </div>
+    </div>
+</div>
