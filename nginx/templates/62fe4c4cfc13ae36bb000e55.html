@@ -1,0 +1,110 @@
+<div class="container">
+    <figure>
+        <blockquote class="blockquote">
+            <p class="mb-0 text-info">"After the 11th round of bidding, we would have over 82% of our land area and 98% of our population complete so that piped cooking gas can be delivered to households,The only population that will be left will be some areas in the North East
+                and Jammu & Kashmir because they are widely dispersed. Typically, cooking gas that comes through the pipe is cheaper and more consumer friendly than that supplied through cylinders"</p>
+        </blockquote>
+        <figcaption class="text-secondary">
+            --Union minister for Petroleum and Natural Gas: Hardeep Singh Puri @<cite title="Source Title">RajyaSabha
+                March, 28 2022</cite>
+        </figcaption>
+    </figure>
+    <p class="text-justified text-md-left">That leaves one thing to no doubt : The central government is very much ambitious on piped gas utility provisions. What we may ask as a question - are we ready to digitize the billing process of gas supplying service providers ? While current service
+        providers do a good job providing utility services, the billing process is a bit outdated. Gas meters that we use are <strong>volume measuring mechanical (diaphragm displacement) offline devices.</strong> Offline devices are typically analogue
+        devices that need to be eyeballed for the reading.</p>
+    <p class="text-justified text-md-left">Automated meter reading (AMR) was introduced way back in 1962 AT&T, the experiment failed. The modern era of AMR started in 1985; since then different techniques have been used to get better <strong>reliability and performance.</strong> A handful
+        of countries have adopted the digital metering system but most of them continue using the archiac meters for utilities : Cooking gas is one such. <strong>Analogue-Offline meters attached to gas pipes are cumbersome, prone
+            to inaccuracies and also dependent
+            on manual intervention to generate and track billing/payments.</strong>
+    </p>
+    <p class="text-justified text-md-left">We @ Eensymachines propose prototyping digitization (cloud connect) of existing meters. Such a system of components will <strong>piggyback on existing meters and through Internet of
+            things will provide a large
+            relief,optimize,& make reliable the existing billing
+            process.</strong>
+    </p>
+    <h4 class="text-secondary text-center text-md-left"> Types of metering</h4>
+    <hr>
+    <p class="text-secondary" class="text-justified text-md-left">There are 4 principles in gas metering</p>
+    <ul>
+        <li>Mass flow measurement</li>
+        <li>Velocity flow measurement</li>
+        <li>Differential pressure</li>
+        <li><strong>Positive displacement meters</strong></li>
+    </ul>
+    <p class="text-secondary" class="text-justified text-md-left">They are based on 3 characteristics of fluid</p>
+    <ul>
+        <li>Positive displacement meters collect a fixed fluid volume, then release and refill the gas or liquid. Then, tally how many times the capacity fills to determine the flow.</li>
+        <li>When measuring the rate of fluid over a known area, one can determine the flow.</li>
+        <li>Other methods depend on the flowing stream’s forces as it overpowers a known constriction and indirectly calculates flow.</li>
+    </ul>
+    <p class="text-justified text-md-left">The most common ones found in my country are the PD meters, hence we would be dwelling into details of the same. <strong>Positive displacement meters require fluid to displace components
+            mechanically and measure volumetric flow at the operating temperature</strong> and pressure. While they have sufficient accuracy, pressure and temperature compensation are needed to achieve mass flow, and since they have moving parts, the
+        user must consider gas cleanliness. A PD meter may be called a PD flow meter or a
+        <strong>volumetric
+            flow meter.</strong></p>
+    <div style="position:relative;padding-bottom: 56.25%;padding-top:25px;height:0" class="text-center">
+        <!-- https://www.w3schools.com/howto/howto_css_responsive_iframes.asp -->
+        <!-- https://stackoverflow.com/questions/17838607/making-an-iframe-responsive -->
+        <iframe style="position:absolute;top:0;left:0;width:80%;height:80%;" class="responsive-iframe" width="420" height="315" src="https://www.youtube.com/embed/2TPtr7XobhI" title="Itron C&I Diaphragm GAS Meters from Hanley Controls" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+        </iframe>
+        <!-- <iframe width="1280" height="715" src="https://www.youtube.com/embed/2TPtr7XobhI"   allowfullscreen></iframe> -->
+    </div>
+    <p class="text-justified text-md-left">As you can notice in the video the <strong>gas cyclically displaces a
+            diaphragm and the number of cycles corelates to the flow of the gas through it.</strong> The characteristics of the diaphragm is accurately known and in working conditions the mechanically displaced components are assumed to have minimal wear/tear
+        so as NOT to induce any kind of inaccuracices.If the meter is located such that the service provider has no access to it, getting the monthly/cumulitive reading is a challenge. The customer has to be requested to get a legible snapshot of the
+        meter. Once received, such photographs are also daunting to convert to digital reading.</p>
+    <h4 class="text-secondary text-center text-md-left">Current billing process</h4>
+    <hr>
+    <p class="text-justified text-md-left">Majority of the service providers have installed the mechanical diaphragm meter with analogue reading panel. The meters are typically located inside the consumer's premises such that the service provider has no means of accessing and verifying the
+        reading. With montly billing cycles this is a repeated labor intensive task that demands dedicated manpower.
+    </p>
+    <ol>
+        <li>Each month the service provider will send out <strong>reminders</strong> to submit legible
+            <strong>snapshots</strong> of the meters. </li>
+        <li>Deligent customers will send the snapshots denoting the current meter reading. </li>
+        <li>The service provider then employs a workforce which can <strong>track, map and digitally convert</strong> the current reading.
+        </li>
+        <li><strong>Billing</strong> is then calculated on the then unit prices. - unit prices vary with government directions.
+        </li>
+        <li>Billing amounts in INR are then sent to each of the customer.</li>
+        <li>The team employed by the service provider then painstakingly <strong>follows up with each customer</strong> for payment of bills.
+        </li>
+        <li><strong>Defaulters are then intimated</strong> about the late payment surcharges and even possible discontinuity of services.
+        </li>
+        <li>Bill adjustments and <strong>roll overs, gas leak surcharges</strong> are then also appended to the next billing cycle.</li>
+        <li>Consumers who pay bills on/before time are then granted <strong>waivers and offers.</strong></li>
+    </ol>
+    <p class="text-justified text-md-left">As you can notice the process is far from being lean, the customer gets overwhelmed with reminders and manual intensive process of reading conversion is prone to a lot of errors. This isn't really economical for the service provider in the longer
+        run. We need some IoT intervention and cloud assistance to get this straight.</p>
+    <h4 class="text-secondary text-center text-md-left">Enter IoT and cloud</h4>
+    <hr>
+    <div class="text-center">
+        <!-- https://getbootstrap.com/docs/4.0/content/images/ -->
+        <img class="d-none d-md-inline" src="/images/smartbill_schema.jpg" alt="" width="85%" class="img-fluid" style="max-width: 100%; height: auto;">
+        <img class="d-inline d-md-none" src="/images/smartbill_schema.jpg" alt="" width="100%" class="img-fluid" style="max-width: 100%; height: auto;">
+    </div>
+    <p class="text-justified text-md-left"><strong>Electronic camera module with a motherboard</strong>, mounted near the meter can take snapshots of the reading panel. This can be <strong>programmed to be done at the billing
+            date.</strong> The motherboard can then hop onto the WiFi available nearby and post the photograph to a <strong>secured database on the cloud</strong>. OCR (Optical character recognition) algorithm can make digital values from the photographs
+        and since each electronic unit is associated with one consumer, this can be regarded as valid current month's reading. Billing can then be instantly calculated for the consumer-month and invoice is sent over a messaging application/email. <strong>Digital
+            invoices</strong> have instant pay options and once the consumer has paid the bill, service provider's database is updated.
+    </p>
+    <p class="text-justified text-md-left">Notice how since the electronics on site can do major heavy lifting of clicking punctual, legible photographs of the panel, the manual effort of following-up with the consumer unecessary. This leads to consumer convenience and hence better relations.
+        Incase of changes in unit rate, or leakage surcharges the service provider now can keep all the consumers updated well before the billing is generated.</p>
+    <p class="text-justified text-md-left">Defaulters can be tracked and notified of the late payment surcharges, with a software algorithm calculations become instant and accurate.</p>
+    <h4 class="text-secondary text-center text-md-left">But you must also know..</h4>
+    <hr>
+    <ol>
+        <li>Since the electronic unit taking photographs is located inside the consumer's premises, its their responsibility to maintain it. Any deliberate external damage/alteration is attributed/chargeable to them
+        </li>
+        <li>Accordance to government guidelines no electrical power supply can be in 3ft vicinity of the gas pipeline
+        </li>
+        <li>This system works on the presumption that Home WiFi is always available for connection. 4G modules can be provided incase WiFi is not enabled, but this will add signifcant cost to the solution.</li>
+        <li>Limited local storage is available incase the device has to go offline. Incase the device is offline for more than a stipulated time, manual intervention is required from the service provider.</li>
+    </ol>
+    <h4 class="text-secondary text-center text-md-left">Let's partner to develop a prototype</h4>
+    <p class="text-justified text-md-left">
+        If you are willing to partner with <a target="_blank" href="http://web.eensymachines.in/">Eensymachines</a> to develop a live prototype of the concept above, we are more than willing to partner with you. If you see, we can add more value to your
+        goods (meters), we are happy to develop a prototype tailormade for your meters.
+        <h5><a target="_blank" href="https://api.whatsapp.com/send?phone=+918390302622">Reach out to us&nbsp;<i class="fab fa-whatsapp"></i></a></h5>
+    </p>
+</div>

@@ -192,6 +192,38 @@
                 "r": "https://core.telegram.org/bots/api",
                 "t": "Telegram bot API documentation"
             }]
+        },
+        {
+            "title": "Smart metering for domestic cooking gas",
+            "sub_title": "Digitizing the billing process for domestic cooking gas as an addon to the existing analogue meters.",
+            "purport": "While we are bullish on our aim to provide piped cooking gas, here is a look at how we can streamline the existing billing process",
+            "date": "2022-08-18",
+            "author": "kneerunjun@gmail.com",
+            "author_name": "Niranjan",
+            "place": "Pune",
+            "tags": [
+                "home automation",
+                "utilities",
+                "IoT",
+                "cooking gas"
+            ],
+            "id": "62fe4c4cfc13ae36bb000e55",
+            "comments": true,
+            "cover": "gasmeter.jpg",
+            "cover_credit": "https://unsplash.com/photos/mXUFJ1U2AeA?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink",
+            "references": [{
+                "r": "https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.953.3869&rep=rep1&type=pdf",
+                "t": "Gas meter automation, white paper"
+            }, {
+                "r": "https://sagemetering.com/back-to-basics/gas-meter-types-for-flow-measurement/",
+                "t": "Gas flow meter types, basic principle"
+            }, {
+                "r": "https://youtu.be/2TPtr7XobhI",
+                "t": "Youtube video diaphragm meter working animation"
+            }, {
+                "r": "https://economictimes.indiatimes.com/news/india/98-of-indias-population-will-be-covered-with-piped-cooking-gas-minister/articleshow/90497009.cms?from=mdr",
+                "t": "News on piped gas"
+            }]
         }
     ]
 }
