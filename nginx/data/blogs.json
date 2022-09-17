@@ -224,6 +224,26 @@
                 "r": "https://economictimes.indiatimes.com/news/india/98-of-indias-population-will-be-covered-with-piped-cooking-gas-minister/articleshow/90497009.cms?from=mdr",
                 "t": "News on piped gas"
             }]
+        },
+        {
+            "title": "Electrical switches of the future",
+            "sub_title": "Combining IoT and analytics on power consumption can lead us to make the true switches of the future.",
+            "purport": "Cloud driven electrical switches arent a novel concept any longer, but add to that analytical capability of power consumption- can give us switches ready for the homes of the future",
+            "date": "2022-09-14",
+            "author": "kneerunjun@gmail.com",
+            "author_name": "Niranjan",
+            "place": "Pune",
+            "tags": [
+                "home automation",
+                "utilities",
+                "IoT",
+                "electrical switches"
+            ],
+            "id": "6321236afc13ae6e58000000",
+            "comments": true,
+            "cover": "iotswitch.jpg",
+            "cover_credit": "https://unsplash.com/photos/47jO5Y8nsYo?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink",
+            "references": []
         }
     ]
 }
